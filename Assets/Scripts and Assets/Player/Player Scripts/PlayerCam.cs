@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.Netcode;
 
-
 public class PlayerCam : NetworkBehaviour
 {
     public float sensX;
