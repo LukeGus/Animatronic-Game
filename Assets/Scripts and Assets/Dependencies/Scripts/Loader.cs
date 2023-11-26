@@ -4,27 +4,12 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Loader {
-
-
-    public enum Scene {
-        MainMenuScene,
-        GameScene,
-        LoadingScene,
-        LobbyScene,
-        CharacterSelectScene,
-        Demo_Scene,
-    }
-
-
+public static class Loader 
+{
     private static Scene targetScene;
 
-
-
-    public static void Load(Scene targetScene) {
-        Loader.targetScene = targetScene;
-
-        SceneManager.LoadScene(Scene.LoadingScene.ToString());
+    public static void Load(string sceneName) {
+        SceneManager.LoadScene(sceneName);
     }
 
     public static void LoadNetwork(string mapName)
@@ -35,5 +20,4 @@ public static class Loader {
     public static void LoaderCallback() {
         SceneManager.LoadScene(targetScene.ToString());
     }
-
 }

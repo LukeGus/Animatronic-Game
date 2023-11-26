@@ -40,7 +40,7 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            Loader.Load(Loader.Scene.LobbyScene);
+            Loader.Load("LobbyScene");
         }
     }
     

@@ -13,6 +13,6 @@ public class StartManager : MonoBehaviour
     
     public void StartGame(string sceneName)
     {
-        Loader.LoadNetwork(sceneName);
+        Loader.Load(sceneName);
     }
 }

@@ -25,6 +25,8 @@ public class LobbyListUI : MonoBehaviour {
 
         refreshButton.onClick.AddListener(RefreshButtonClick);
         createLobbyButton.onClick.AddListener(CreateLobbyButtonClick);
+        
+        RefreshButtonClick();
     }
 
     private void Start() {
@@ -32,6 +34,13 @@ public class LobbyListUI : MonoBehaviour {
         LobbyManager.Instance.OnJoinedLobby += LobbyManager_OnJoinedLobby;
         LobbyManager.Instance.OnLeftLobby += LobbyManager_OnLeftLobby;
         LobbyManager.Instance.OnKickedFromLobby += LobbyManager_OnKickedFromLobby;
+        
+        InvokeRepeating("AutoRefresh", 0f, 2f);
+    }
+    
+    private void AutoRefresh()
+    {
+        RefreshButtonClick();
     }
 
     private void LobbyManager_OnKickedFromLobby(object sender, LobbyManager.LobbyEventArgs e) {

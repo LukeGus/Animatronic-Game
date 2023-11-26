@@ -23,7 +23,7 @@ public class ClientReady : MonoBehaviour
     {
         LobbyManager.Instance.LeaveLobby();
         NetworkManager.Singleton.Shutdown();
-        Loader.Load(Loader.Scene.LobbyScene);
+        Loader.Load("LobbyScene");
     }
 
     public void Vote()

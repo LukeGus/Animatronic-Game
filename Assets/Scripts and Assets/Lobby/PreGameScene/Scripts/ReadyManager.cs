@@ -41,12 +41,11 @@ public class ReadyManager : NetworkBehaviour
 
     private void Start()
     {
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
+        
         if (!IsServer)
         {
             return;
-        } else
-        {
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
         }
         
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnnectedCallback;
@@ -97,20 +96,19 @@ public class ReadyManager : NetworkBehaviour
                 }
                 
             }
-        } else
+        }
+        
+        if (timer.Value != 0)
         {
-            if (timer.Value != 0)
-            {
-                timerText.text = timer.Value.ToString("F0");
-            }
-            else
-            {
-                timerText.text = "Starting!";
-            }
-                
-            playerCountText.text = playerCount.Value.ToString("F0") + "/" + maxPlayerCount.Value.ToString("F0");
-        }    
-
+            timerText.text = timer.Value.ToString("F0");
+        }
+        else
+        {
+            timerText.text = "Starting!";
+        }
+        
+        playerCountText.text = playerCount.Value.ToString("F0") + "/" + maxPlayerCount.Value.ToString("F0");
+        
     }
     
     public void ReceiveVote()
@@ -142,7 +140,7 @@ public class ReadyManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectedCallBack;
             
-            Loader.Load(Loader.Scene.LobbyScene);
+            Loader.Load("LobbyScene");
         }
         
         maxPlayerCount.Value -= 1;
