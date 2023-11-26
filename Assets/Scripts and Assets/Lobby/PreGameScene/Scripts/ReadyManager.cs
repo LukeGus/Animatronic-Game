@@ -8,24 +8,22 @@ using TMPro;
 
 public class ReadyManager : NetworkBehaviour 
 {
-    
     public static ReadyManager Instance { get; private set; }
     
-    private NetworkVariable<float> playerCount = new NetworkVariable<float>(0f);
-    private NetworkVariable<float> maxPlayerCount = new NetworkVariable<float>(0f);
+    private NetworkVariable<float> playerReadyCount = new NetworkVariable<float>(0f);
+    private NetworkVariable<float> maxPlayerReadyCount = new NetworkVariable<float>(0f);
     
-    [SerializeField] private TMP_Text playerCountText;
-
+    private NetworkVariable<float> timer = new NetworkVariable<float>(
+            value: 60f,
+            NetworkVariableReadPermission.Everyone);
+    
+    [SerializeField] private TMP_Text playerReadyCountText;
     [SerializeField] private TMP_Text timerText;
     
     [SerializeField] private float countdownTimerValue;
-    private bool everyoneIsReadyRunning = true;
-   
-    private NetworkVariable<float> timer = new NetworkVariable<float>(
-        value: 60f,
-        NetworkVariableReadPermission.Everyone);
         
     private bool isRunning = true;
+    private bool everyoneIsReadyRunning;
 
     private void Awake()
     {
@@ -48,21 +46,26 @@ public class ReadyManager : NetworkBehaviour
             return;
         }
         
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnnectedCallback;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
-        
         isRunning = true;
+        everyoneIsReadyRunning = true;
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void SendReadyServerRpc(ServerRpcParams rpcParams = default)
     {
-        ReceiveVote();
+        playerReadyCount.Value += 1;
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void SendPlayerConnectedServerRpc(ServerRpcParams rpcParams = default)
+    {
+        maxPlayerReadyCount.Value += 1;
     }
 
     public void StartGame()
     {
         isRunning = false;
+        everyoneIsReadyRunning = false;
         
         Loader.LoadNetwork("GameScene");
     }
@@ -87,10 +90,8 @@ public class ReadyManager : NetworkBehaviour
     
                 if (countdownTimerValue <= 0f)
                 {
-                    if (playerCount.Value == maxPlayerCount.Value)
+                    if (playerReadyCount.Value == maxPlayerReadyCount.Value)
                     {
-                        Debug.Log("Everyone Is Ready");
-                        
                         StartGame();
                     }    
                 }
@@ -107,28 +108,7 @@ public class ReadyManager : NetworkBehaviour
             timerText.text = "Starting!";
         }
         
-        playerCountText.text = playerCount.Value.ToString("F0") + "/" + maxPlayerCount.Value.ToString("F0");
-        
-    }
-    
-    public void ReceiveVote()
-    {
-        if (!IsServer)
-        {
-            return;
-        }
-        
-        playerCount.Value += 1;
-    }
-      
-    private void OnClientConnnectedCallback(ulong clientId)
-    {
-        if (!IsServer)
-        {
-            return;
-        }
-        
-        maxPlayerCount.Value += 1;
+        playerReadyCountText.text = playerReadyCount.Value.ToString("F0") + "/" + maxPlayerReadyCount.Value.ToString("F0");
     }
     
     private void OnClientDisconnectedCallBack(ulong clientID)
@@ -143,6 +123,6 @@ public class ReadyManager : NetworkBehaviour
             Loader.Load("LobbyScene");
         }
         
-        maxPlayerCount.Value -= 1;
+        maxPlayerReadyCount.Value += 1;
     }
 }

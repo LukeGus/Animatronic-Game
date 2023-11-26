@@ -17,6 +17,8 @@ public class ClientReady : MonoBehaviour
     {
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
+        
+        ReadyManager.Instance.SendPlayerConnectedServerRpc();
     }
     
     public void Leave()
