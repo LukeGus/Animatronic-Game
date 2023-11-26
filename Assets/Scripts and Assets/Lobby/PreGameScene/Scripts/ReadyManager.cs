@@ -44,6 +44,9 @@ public class ReadyManager : NetworkBehaviour
         if (!IsServer)
         {
             return;
+        } else
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
         }
         
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnnectedCallback;
@@ -55,20 +58,13 @@ public class ReadyManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SendReadyServerRpc(ServerRpcParams rpcParams = default)
     {
-        if (!IsServer)
-        {
-            return;
-        }
-        
         ReceiveVote();
     }
 
     public void StartGame()
     {
-        // Stop the timer
         isRunning = false;
-    
-        // Load Map (Replace this later with the gamemode)
+        
         Loader.LoadNetwork("GameScene");
     }
 
@@ -142,6 +138,11 @@ public class ReadyManager : NetworkBehaviour
         if (!IsServer)
         {
             return;
+        } else
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectedCallBack;
+            
+            Loader.Load(Loader.Scene.LobbyScene);
         }
         
         maxPlayerCount.Value -= 1;

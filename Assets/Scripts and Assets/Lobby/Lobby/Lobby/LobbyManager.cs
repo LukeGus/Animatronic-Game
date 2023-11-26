@@ -214,6 +214,10 @@ public class LobbyManager : MonoBehaviour {
         OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
 
         Debug.Log("Created Lobby " + lobby.Name);
+        
+        await Task.Delay(1000);
+        
+        UpdatePlayerName(playerName);
     }
 
     public async void RefreshLobbyList() {
@@ -264,9 +268,14 @@ public class LobbyManager : MonoBehaviour {
         });
 
         OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+        
+        Debug.Log("Joined Lobby " + lobby.Name);
+        
+        UpdatePlayerName(playerName);
     }
 
     public async void UpdatePlayerName(string playerName) {
+
         this.playerName = playerName;
 
         if (joinedLobby != null) {

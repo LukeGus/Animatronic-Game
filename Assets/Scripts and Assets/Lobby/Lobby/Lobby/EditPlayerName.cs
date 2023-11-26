@@ -39,8 +39,13 @@ public class EditPlayerName : MonoBehaviour {
 
         playerNameText.text = playerName;
         
-        Debug.Log(playerName);
+        OnNameChanged?.Invoke(this, EventArgs.Empty);
         
+        InvokeRepeating("InvokeNameChangedEvent", 0f, 2f);
+    }
+    
+    private void InvokeNameChangedEvent()
+    {
         OnNameChanged?.Invoke(this, EventArgs.Empty);
     }
 
