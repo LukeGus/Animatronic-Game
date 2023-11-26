@@ -62,8 +62,8 @@ Windows 64 BitBatchPath,  §
 Windows 64 BitDefine,Windows64§
 Windows 64 BitCurrentBackend,0§
 Windows 64 BitC++Config,0§
-Windows 64 BitNamePrefix,Windows64§
-Windows 64 BitNameSuffix,  §
+Windows 64 BitNamePrefix,  §
+Windows 64 BitNameSuffix,64Windows§
 Windows 32 Bit,False§
 Windows 32 BitBatch,False§
 Windows 32 BitBatchPath,  §
