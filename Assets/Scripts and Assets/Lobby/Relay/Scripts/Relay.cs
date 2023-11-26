@@ -64,7 +64,7 @@ public class Relay : MonoBehaviour
             Debug.Log("Joining relay with " + joinCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            RelayServerData relayServerData = new RelayServerData(joinAllocation, "wss");
+            RelayServerData relayServerData = new RelayServerData(joinAllocation, "dlts");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
