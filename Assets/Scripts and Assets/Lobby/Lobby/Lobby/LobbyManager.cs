@@ -1,16 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
 using Unity.Netcode;
 
 public class LobbyManager : NetworkBehaviour {
@@ -54,10 +50,8 @@ public class LobbyManager : NetworkBehaviour {
     private Lobby joinedLobby;
     private string playerName;
     [HideInInspector] public string finalGameMode;
-    
-    [HideInInspector] public NetworkVariable<int> playerCount = new NetworkVariable<int>(
-        value: 0,
-        NetworkVariableReadPermission.Everyone);
+
+    [HideInInspector] public int playerCount;
 
 
     private void Awake() {
@@ -70,10 +64,14 @@ public class LobbyManager : NetworkBehaviour {
     }
     
     private void Update() {
-        //HandleRefreshLobbyList(); // Disabled Auto Refresh for testing with multiple builds
         HandleLobbyHeartbeat();
         HandleLobbyPolling();
         Cursor.visible = true;
+        
+        if (joinedLobby != null)
+        {
+            playerCount = joinedLobby.Players.Count;
+        }
     }
 
     public async void Authenticate(string playerName) {
@@ -403,11 +401,11 @@ public class LobbyManager : NetworkBehaviour {
 
     private void OnJoinedLobbyHandler(object sender, LobbyEventArgs e)
     {
-        playerCount.Value += 1;
+        playerCount += 1;
     }
 
     private void OnLeftLobbyHandler(object sender, EventArgs e)
     {
-        playerCount.Value -= 1;
+        playerCount -= 1;
     }
 }

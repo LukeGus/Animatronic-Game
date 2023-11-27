@@ -79,10 +79,11 @@ public class ReadyManager : NetworkBehaviour
             mainTimerIsRunning = true;
             secondaryTimerIsRunning = true;
 
-            maxPlayerReadyCount.Value = LobbyManager.Instance.playerCount.Value;
+            maxPlayerReadyCount.Value = LobbyManager.Instance.playerCount;
 
             // Make this not instantiate them all in the same spot
 
+            /*
             for (int i = 0; i < maxPlayerReadyCount.Value; i++)
             {
                 GameObject playerObject = Instantiate(playerReadyObject1, playerReadyObject1.transform.position,
@@ -90,6 +91,7 @@ public class ReadyManager : NetworkBehaviour
 
                 playerObject.GetComponent<NetworkObject>().Spawn();
             }
+            */
         }
     }
     
