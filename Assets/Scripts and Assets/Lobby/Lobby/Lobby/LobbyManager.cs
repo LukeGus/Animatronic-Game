@@ -9,8 +9,11 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using Unity.Netcode;
 
-public class LobbyManager : MonoBehaviour {
+public class LobbyManager : NetworkBehaviour {
 
 
     public static LobbyManager Instance { get; private set; }
@@ -43,12 +46,6 @@ public class LobbyManager : MonoBehaviour {
         Regular
     }
 
-    public enum PlayerCharacter {
-        Marine,
-        Ninja,
-        Zombie
-    }
-
 
 
     private float heartbeatTimer;
@@ -57,14 +54,21 @@ public class LobbyManager : MonoBehaviour {
     private Lobby joinedLobby;
     private string playerName;
     [HideInInspector] public string finalGameMode;
+    
+    [HideInInspector] public NetworkVariable<int> playerCount = new NetworkVariable<int>(
+        value: 0,
+        NetworkVariableReadPermission.Everyone);
 
 
     private void Awake() {
         Instance = this;
         
         DontDestroyOnLoad(gameObject);
+        
+        LobbyManager.Instance.OnJoinedLobby += OnJoinedLobbyHandler;
+        LobbyManager.Instance.OnLeftLobby += OnLeftLobbyHandler;
     }
-
+    
     private void Update() {
         //HandleRefreshLobbyList(); // Disabled Auto Refresh for testing with multiple builds
         HandleLobbyHeartbeat();
@@ -140,6 +144,8 @@ public class LobbyManager : MonoBehaviour {
                     // Start Game!
                     if (!IsLobbyHost())
                     {
+                        await Task.Delay(10000);
+                        
                         Relay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
 
@@ -173,8 +179,7 @@ public class LobbyManager : MonoBehaviour {
 
     private Player GetPlayer() {
         return new Player(AuthenticationService.Instance.PlayerId, null, new Dictionary<string, PlayerDataObject> {
-            { KEY_PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
-            { KEY_PLAYER_CHARACTER, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, PlayerCharacter.Marine.ToString()) }
+            { KEY_PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) }
         });
     }
 
@@ -303,31 +308,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    public async void UpdatePlayerCharacter(PlayerCharacter playerCharacter) {
-        if (joinedLobby != null) {
-            try {
-                UpdatePlayerOptions options = new UpdatePlayerOptions();
-
-                options.Data = new Dictionary<string, PlayerDataObject>() {
-                    {
-                        KEY_PLAYER_CHARACTER, new PlayerDataObject(
-                            visibility: PlayerDataObject.VisibilityOptions.Public,
-                            value: playerCharacter.ToString())
-                    }
-                };
-
-                string playerId = AuthenticationService.Instance.PlayerId;
-
-                Lobby lobby = await LobbyService.Instance.UpdatePlayerAsync(joinedLobby.Id, playerId, options);
-                joinedLobby = lobby;
-
-                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-            } catch (LobbyServiceException e) {
-                Debug.Log(e);
-            }
-        }
-    }
-
     public async void QuickJoinLobby() {
         try {
             QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
@@ -410,6 +390,8 @@ public class LobbyManager : MonoBehaviour {
 
                 joinedLobby = lobby;
                 
+                await Task.Delay(10000);
+                
                 StartManager.Instance.StartGame("PreGameScene");
             }
             catch (LobbyServiceException e)
@@ -417,5 +399,15 @@ public class LobbyManager : MonoBehaviour {
                 Debug.Log(e);
             }
         }
+    }
+
+    private void OnJoinedLobbyHandler(object sender, LobbyEventArgs e)
+    {
+        playerCount.Value += 1;
+    }
+
+    private void OnLeftLobbyHandler(object sender, EventArgs e)
+    {
+        playerCount.Value -= 1;
     }
 }

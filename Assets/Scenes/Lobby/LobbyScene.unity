@@ -4942,6 +4942,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalGameMode: 
+  playerCount:
+    m_InternalValue: 0
 --- !u!4 &818158579
 Transform:
   m_ObjectHideFlags: 0

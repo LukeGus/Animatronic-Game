@@ -58,6 +58,8 @@ public class LobbyListUI : MonoBehaviour {
     }
 
     private void UpdateLobbyList(List<Lobby> lobbyList) {
+        if (container == null) return;
+        
         foreach (Transform child in container) {
             if (child == lobbySingleTemplate) continue;
 

@@ -12,14 +12,16 @@ public class ReadyManager : NetworkBehaviour
 {
     public static ReadyManager Instance { get; private set; }
     
-    private NetworkVariable<float> playerReadyCount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone);
-    private NetworkVariable<float> maxPlayerReadyCount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone);
+    private NetworkVariable<int> playerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
+    private NetworkVariable<int> maxPlayerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
     
     private NetworkVariable<float> mainTimer = new NetworkVariable<float>(
             value: 60f,
             NetworkVariableReadPermission.Everyone);
     
-    private float secondaryTimer;
+    private NetworkVariable<float> secondaryTimer = new NetworkVariable<float>(
+                value: 10f,
+                NetworkVariableReadPermission.Everyone);
     
     [SerializeField] private float mainTimerMax;
     [SerializeField] private float secondaryTimerMax;
@@ -27,15 +29,22 @@ public class ReadyManager : NetworkBehaviour
     [SerializeField] private TMP_Text playerReadyCountText;
     [SerializeField] private TMP_Text mainTimerText;
         
-    private bool isRunning = false;
-    private bool everyoneIsReadyRunning = false;
+    private bool mainTimerIsRunning = false;
+    private bool secondaryTimerIsRunning = false;
     
     private bool hasReadyed = false;
     
     [SerializeField] private Button readyButton;
     [SerializeField] private Button leaveLobbyButton;
+    
+    [SerializeField] private GameObject playerReadyObject1;
+    [SerializeField] private GameObject playerReadyObject2;
+    [SerializeField] private GameObject playerReadyObject3;
+    [SerializeField] private GameObject playerReadyObject4;
 
-    private void Awake()
+    [SerializeField] private GameObject playerSelectObject1;
+
+    private void Start()
     {
         if (Instance == null)
         {
@@ -45,20 +54,42 @@ public class ReadyManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
-        
+
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
         
-        SendPlayerConnectedServerRpc();
-        
-        if (LobbyManager.Instance.IsLobbyHost())
+        StartCoroutine(test());
+    }
+
+    private IEnumerator test()
+    {
+        yield return new WaitForSeconds(5f);
+
+        if (NetworkManager.Singleton.IsServer)
         {
+            Debug.Log("Host");
+
             this.NetworkObject.Spawn();
+
+            mainTimer.Value = mainTimerMax;
+            secondaryTimer.Value = secondaryTimerMax;
+
+            mainTimerIsRunning = true;
+            secondaryTimerIsRunning = true;
+
+            maxPlayerReadyCount.Value = LobbyManager.Instance.playerCount.Value;
+
+            // Make this not instantiate them all in the same spot
+
+            for (int i = 0; i < maxPlayerReadyCount.Value; i++)
+            {
+                GameObject playerObject = Instantiate(playerReadyObject1, playerReadyObject1.transform.position,
+                    playerReadyObject1.transform.rotation);
+
+                playerObject.GetComponent<NetworkObject>().Spawn();
+            }
         }
     }
     
@@ -88,47 +119,25 @@ public class ReadyManager : NetworkBehaviour
         playerReadyCount.Value += 1;
         
         Debug.Log("Player ready");
-             
-        if (!isRunning)
-        {
-            isRunning = true;
-            mainTimer.Value = mainTimerMax;
-        }
-        
-        if (!everyoneIsReadyRunning)
-        {
-            everyoneIsReadyRunning = true;
-            secondaryTimer = secondaryTimerMax;
-        }
-    }
-    
-    [ServerRpc(RequireOwnership = false)]
-    public void SendPlayerConnectedServerRpc(ServerRpcParams rpcParams = default)
-    {
-        maxPlayerReadyCount.Value += 1;
-        
-        Debug.Log("Player connected");
     }
 
     public void StartGame()
     {
-        isRunning = false;
-        everyoneIsReadyRunning = false;
+        mainTimerIsRunning = false;
+        secondaryTimerIsRunning = false;
         
         Debug.Log("Starting game");
         
-        string gameMode;
-        
-        gameMode = LobbyManager.Instance.finalGameMode;
+        string gameMode = LobbyManager.Instance.finalGameMode;
         
         Loader.LoadNetwork(gameMode);
     }
 
     private void Update()
     {
-        if (IsHost)
+        if (NetworkManager.Singleton.IsServer)
         {
-            if (isRunning)
+            if (mainTimerIsRunning)
             {
                 mainTimer.Value -= Time.deltaTime;
     
@@ -138,11 +147,11 @@ public class ReadyManager : NetworkBehaviour
                 }
             }
             
-            if (everyoneIsReadyRunning)
+            if (secondaryTimerIsRunning)
             {
-                secondaryTimer -= Time.deltaTime;
+                secondaryTimer.Value -= Time.deltaTime;
     
-                if (secondaryTimer <= 0f)
+                if (secondaryTimer.Value <= 0f)
                 {
                     if (playerReadyCount.Value == maxPlayerReadyCount.Value)
                     {
@@ -153,7 +162,7 @@ public class ReadyManager : NetworkBehaviour
             }
         }
         
-        if (mainTimer.Value != 0)
+        if (mainTimer.Value != 1)
         {
             mainTimerText.text = mainTimer.Value.ToString("F0");
         }
@@ -167,14 +176,13 @@ public class ReadyManager : NetworkBehaviour
     
     private void OnClientDisconnectedCallBack(ulong clientID)
     {
-        if (!IsHost)
-        {
-            return;
-        } else
+        if (!NetworkManager.Singleton.IsServer)
         {
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectedCallBack;
-            
+
             Loader.Load("LobbyScene");
+            
+            return;
         }
         
         if (maxPlayerReadyCount != null)
@@ -183,5 +191,12 @@ public class ReadyManager : NetworkBehaviour
         }
         
         Debug.Log("Player disconnected");
+
+        if (maxPlayerReadyCount.Value == 1)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnectedCallBack;
+
+            Loader.Load("LobbyScene");
+        }    
     }
 }
