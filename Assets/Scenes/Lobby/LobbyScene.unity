@@ -4943,8 +4943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalGameMode: 
-  playerCount:
-    m_InternalValue: 0
+  playerCount: 0
 --- !u!4 &818158579
 Transform:
   m_ObjectHideFlags: 0
@@ -9964,7 +9963,8 @@ MonoBehaviour:
     NetworkTransport: {fileID: 1657022665}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 9ea3cbfb2f92b984e86dc2e154ff2725, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0

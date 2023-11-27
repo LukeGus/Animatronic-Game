@@ -144,7 +144,8 @@ public class LobbyManager : NetworkBehaviour {
                     {
                         await Task.Delay(10000);
                         
-                        Relay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                        if (joinedLobby != null)
+                            Relay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
 
                     joinedLobby = null;

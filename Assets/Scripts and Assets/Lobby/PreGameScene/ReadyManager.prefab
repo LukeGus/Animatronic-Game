@@ -51,6 +51,11 @@ MonoBehaviour:
   mainTimerText: {fileID: 0}
   readyButton: {fileID: 0}
   leaveLobbyButton: {fileID: 0}
+  playerReadyObject1: {fileID: 0}
+  playerReadyObject2: {fileID: 0}
+  playerReadyObject3: {fileID: 0}
+  playerReadyObject4: {fileID: 0}
+  playerSelectObject1: {fileID: 0}
 --- !u!114 &2086227943626547557
 MonoBehaviour:
   m_ObjectHideFlags: 0
