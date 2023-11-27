@@ -1,29 +1,39 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.UI;
 
 public class ReadyManager : NetworkBehaviour 
 {
     public static ReadyManager Instance { get; private set; }
     
-    private NetworkVariable<float> playerReadyCount = new NetworkVariable<float>(0f);
-    private NetworkVariable<float> maxPlayerReadyCount = new NetworkVariable<float>(0f);
+    private NetworkVariable<float> playerReadyCount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone);
+    private NetworkVariable<float> maxPlayerReadyCount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone);
     
-    private NetworkVariable<float> timer = new NetworkVariable<float>(
+    private NetworkVariable<float> mainTimer = new NetworkVariable<float>(
             value: 60f,
             NetworkVariableReadPermission.Everyone);
     
-    [SerializeField] private TMP_Text playerReadyCountText;
-    [SerializeField] private TMP_Text timerText;
+    private float secondaryTimer;
     
-    [SerializeField] private float countdownTimerValue;
+    [SerializeField] private float mainTimerMax;
+    [SerializeField] private float secondaryTimerMax;
+    
+    [SerializeField] private TMP_Text playerReadyCountText;
+    [SerializeField] private TMP_Text mainTimerText;
         
-    private bool isRunning = true;
-    private bool everyoneIsReadyRunning;
+    private bool isRunning = false;
+    private bool everyoneIsReadyRunning = false;
+    
+    private bool hasReadyed = false;
+    
+    [SerializeField] private Button readyButton;
+    [SerializeField] private Button leaveLobbyButton;
 
     private void Awake()
     {
@@ -41,25 +51,58 @@ public class ReadyManager : NetworkBehaviour
     {
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
         
-        if (!IsServer)
-        {
-            return;
-        }
+        readyButton.onClick.AddListener(Vote);
+        leaveLobbyButton.onClick.AddListener(Leave);
         
-        isRunning = true;
-        everyoneIsReadyRunning = true;
+        SendPlayerConnectedServerRpc();
+    }
+    
+    public void Leave()
+    {
+        LobbyManager.Instance.LeaveLobby();
+        NetworkManager.Singleton.Shutdown();
+        
+        Loader.Load("LobbyScene");
+    }
+    
+    public void Vote()
+    {
+        if (!hasReadyed)
+        {
+            SendReadyServerRpc();
+            
+            hasReadyed = true;
+            
+            Debug.Log("Ready");
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void SendReadyServerRpc(ServerRpcParams rpcParams = default)
     {
         playerReadyCount.Value += 1;
+        
+        Debug.Log("Player ready");
+             
+        if (!isRunning)
+        {
+            isRunning = true;
+            mainTimer.Value = mainTimerMax;
+        }
+        
+        if (!everyoneIsReadyRunning)
+        {
+            everyoneIsReadyRunning = true;
+            secondaryTimer = secondaryTimerMax;
+        }
     }
     
     [ServerRpc(RequireOwnership = false)]
     public void SendPlayerConnectedServerRpc(ServerRpcParams rpcParams = default)
     {
         maxPlayerReadyCount.Value += 1;
+        
+        Debug.Log("Player connected");
     }
 
     public void StartGame()
@@ -67,28 +110,30 @@ public class ReadyManager : NetworkBehaviour
         isRunning = false;
         everyoneIsReadyRunning = false;
         
+        Debug.Log("Starting game");
+        
         Loader.LoadNetwork("GameScene");
     }
 
     private void Update()
     {
-        if (IsServer)
+        if (IsHost)
         {
             if (isRunning)
             {
-                timer.Value -= Time.deltaTime;
+                mainTimer.Value -= Time.deltaTime;
     
-                if (timer.Value <= 0f)
+                if (mainTimer.Value <= 0f)
                 {
                     StartGame();
                 }
             }
             
-            if (everyoneIsReadyRunning == true)
+            if (everyoneIsReadyRunning)
             {
-                countdownTimerValue -= Time.deltaTime;
+                secondaryTimer -= Time.deltaTime;
     
-                if (countdownTimerValue <= 0f)
+                if (secondaryTimer <= 0f)
                 {
                     if (playerReadyCount.Value == maxPlayerReadyCount.Value)
                     {
@@ -99,13 +144,13 @@ public class ReadyManager : NetworkBehaviour
             }
         }
         
-        if (timer.Value != 0)
+        if (mainTimer.Value != 0)
         {
-            timerText.text = timer.Value.ToString("F0");
+            mainTimerText.text = mainTimer.Value.ToString("F0");
         }
         else
         {
-            timerText.text = "Starting!";
+            mainTimerText.text = "Starting!";
         }
         
         playerReadyCountText.text = playerReadyCount.Value.ToString("F0") + "/" + maxPlayerReadyCount.Value.ToString("F0");
@@ -113,7 +158,7 @@ public class ReadyManager : NetworkBehaviour
     
     private void OnClientDisconnectedCallBack(ulong clientID)
     {
-        if (!IsServer)
+        if (!IsHost)
         {
             return;
         } else
@@ -123,6 +168,8 @@ public class ReadyManager : NetworkBehaviour
             Loader.Load("LobbyScene");
         }
         
-        maxPlayerReadyCount.Value += 1;
+        maxPlayerReadyCount.Value -= 1;
+        
+        Debug.Log("Player disconnected");
     }
 }

@@ -39,8 +39,6 @@ public class LobbyListUI : MonoBehaviour {
     private void AutoRefresh()
     {
         LobbyManager.Instance.RefreshLobbyList();
-        
-        Debug.Log("Refreshed");
     }
 
     private void LobbyManager_OnKickedFromLobby(object sender, LobbyManager.LobbyEventArgs e) {

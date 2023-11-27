@@ -25,6 +25,7 @@ public class ClientReady : MonoBehaviour
     {
         LobbyManager.Instance.LeaveLobby();
         NetworkManager.Singleton.Shutdown();
+        
         Loader.Load("LobbyScene");
     }
 
