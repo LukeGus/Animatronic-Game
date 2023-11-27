@@ -177,7 +177,10 @@ public class ReadyManager : NetworkBehaviour
             Loader.Load("LobbyScene");
         }
         
-        maxPlayerReadyCount.Value -= 1;
+        if (maxPlayerReadyCount != null)
+        {
+            maxPlayerReadyCount.Value -= 1;
+        }
         
         Debug.Log("Player disconnected");
     }

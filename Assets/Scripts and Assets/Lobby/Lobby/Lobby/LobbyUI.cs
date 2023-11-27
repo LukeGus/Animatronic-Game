@@ -67,6 +67,7 @@ public class LobbyUI : MonoBehaviour {
         ClearLobby();
 
         foreach (Player player in lobby.Players) {
+            if (playerSingleTemplate == null) return;
             Transform playerSingleTransform = Instantiate(playerSingleTemplate, container);
             playerSingleTransform.gameObject.SetActive(true);
             LobbyPlayerSingleUI lobbyPlayerSingleUI = playerSingleTransform.GetComponent<LobbyPlayerSingleUI>();
