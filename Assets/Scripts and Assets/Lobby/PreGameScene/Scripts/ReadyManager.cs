@@ -56,7 +56,10 @@ public class ReadyManager : NetworkBehaviour
         
         SendPlayerConnectedServerRpc();
         
-        this.NetworkObject.Spawn();
+        if (LobbyManager.Instance.IsLobbyHost())
+        {
+            this.NetworkObject.Spawn();
+        }
     }
     
     public void Leave()
