@@ -114,7 +114,11 @@ public class ReadyManager : NetworkBehaviour
         
         Debug.Log("Starting game");
         
-        Loader.LoadNetwork("GameScene");
+        string gameMode;
+        
+        gameMode = LobbyManager.Instance.finalGameMode;
+        
+        Loader.LoadNetwork(gameMode);
     }
 
     private void Update()

@@ -12,9 +12,9 @@ public static class Loader
         SceneManager.LoadScene(sceneName);
     }
 
-    public static void LoadNetwork(string mapName)
+    public static void LoadNetwork(string sceneName)
     {
-        NetworkManager.Singleton.SceneManager.LoadScene(mapName, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     public static void LoaderCallback() {

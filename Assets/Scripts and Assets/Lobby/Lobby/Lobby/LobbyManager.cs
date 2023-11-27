@@ -40,8 +40,7 @@ public class LobbyManager : MonoBehaviour {
 
 
     public enum GameMode {
-        CaptureTheFlag,
-        Conquest
+        Regular
     }
 
     public enum PlayerCharacter {
@@ -57,10 +56,13 @@ public class LobbyManager : MonoBehaviour {
     private float refreshLobbyListTimer = 5f;
     private Lobby joinedLobby;
     private string playerName;
+    [HideInInspector] public string finalGameMode;
 
 
     private void Awake() {
         Instance = this;
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update() {
@@ -183,11 +185,8 @@ public class LobbyManager : MonoBehaviour {
 
             switch (gameMode) {
                 default:
-                case GameMode.CaptureTheFlag:
-                    gameMode = GameMode.Conquest;
-                    break;
-                case GameMode.Conquest:
-                    gameMode = GameMode.CaptureTheFlag;
+                case GameMode.Regular:
+                    gameMode = GameMode.Regular;
                     break;
             }
 
@@ -373,6 +372,8 @@ public class LobbyManager : MonoBehaviour {
                     { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
                 }
             });
+            
+            finalGameMode = gameMode.ToString();
 
             joinedLobby = lobby;
 
@@ -380,6 +381,11 @@ public class LobbyManager : MonoBehaviour {
         } catch (LobbyServiceException e) {
             Debug.Log(e);
         }
+    }
+    
+    public string GetGameMode()
+    {
+        return KEY_GAME_MODE;
     }
 
     internal void UpdateLobbyGameMode()
