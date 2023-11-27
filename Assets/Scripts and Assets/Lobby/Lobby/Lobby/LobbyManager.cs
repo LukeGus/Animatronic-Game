@@ -196,6 +196,8 @@ public class LobbyManager : MonoBehaviour {
 
     public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate, GameMode gameMode) {
         Player player = GetPlayer();
+        
+        finalGameMode = gameMode.ToString();
 
         CreateLobbyOptions options = new CreateLobbyOptions {
             Player = player,
@@ -381,11 +383,6 @@ public class LobbyManager : MonoBehaviour {
         } catch (LobbyServiceException e) {
             Debug.Log(e);
         }
-    }
-    
-    public string GetGameMode()
-    {
-        return KEY_GAME_MODE;
     }
 
     internal void UpdateLobbyGameMode()

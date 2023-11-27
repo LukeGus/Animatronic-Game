@@ -126,7 +126,7 @@ public class ReadyManager : NetworkBehaviour
 
     private void Update()
     {
-        if (LobbyManager.Instance.IsLobbyHost())
+        if (IsHost)
         {
             if (isRunning)
             {
@@ -167,7 +167,7 @@ public class ReadyManager : NetworkBehaviour
     
     private void OnClientDisconnectedCallBack(ulong clientID)
     {
-        if (!LobbyManager.Instance.IsLobbyHost())
+        if (!IsHost)
         {
             return;
         } else
