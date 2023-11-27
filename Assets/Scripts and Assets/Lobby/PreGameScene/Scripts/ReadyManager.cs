@@ -55,6 +55,8 @@ public class ReadyManager : NetworkBehaviour
         leaveLobbyButton.onClick.AddListener(Leave);
         
         SendPlayerConnectedServerRpc();
+        
+        this.NetworkObject.Spawn();
     }
     
     public void Leave()
