@@ -60,10 +60,10 @@ public class ReadyManager : NetworkBehaviour
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
         
-        StartCoroutine(test());
+        StartCoroutine(SetUpGame());
     }
 
-    private IEnumerator test()
+    private IEnumerator SetUpGame()
     {
         yield return new WaitForSeconds(5f);
 
