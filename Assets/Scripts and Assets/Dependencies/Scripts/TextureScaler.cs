@@ -13,7 +13,7 @@ public class TextureScaler : MonoBehaviour
     void Start()
     {
         mat = GetComponent<Renderer>().material;
-        mesh = GetComponent<MeshFilter>().mesh;
+        mesh = GetComponent<MeshFilter>().sharedMesh;
     }
 
     void Update()
