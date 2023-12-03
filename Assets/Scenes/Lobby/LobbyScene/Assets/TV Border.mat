@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dark Gray Plastic
-  m_Shader: {fileID: 4800000, guid: a63d59dbb57e70d4ea4f919c08fd225f, type: 3}
+  m_Name: TV Border
+  m_Shader: {fileID: -6465566751694194690, guid: 0066f24fd3c92d0479a113ca7514bf29, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
