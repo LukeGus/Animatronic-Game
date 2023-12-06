@@ -11,7 +11,6 @@ namespace Michsky.DreamOS
         public UnityEvent eventsAfterBoot;
 
         // Resources
-        public Animator bootAnimator;
         [SerializeField] private UserManager userManager;
 
         // Settings
@@ -29,8 +28,6 @@ namespace Michsky.DreamOS
 
         public void InvokeEvents()
         {
-            bootAnimator.gameObject.SetActive(true);
-            bootAnimator.Play("Boot Start");
             StartCoroutine("BootEventStart");
         }
 
@@ -38,18 +35,10 @@ namespace Michsky.DreamOS
         {
             yield return new WaitForSeconds(bootTime);
 
-            if (bootAnimator.gameObject.activeSelf == true) { bootAnimator.Play("Boot Out"); }
             userManager.lockScreen.gameObject.SetActive(true);
             eventsAfterBoot.Invoke();
 
             StopCoroutine("BootEventStart");
-            StartCoroutine("DisableBootScreenHelper");
-        }
-
-        IEnumerator DisableBootScreenHelper()
-        {
-            yield return new WaitForSeconds(1f);
-            bootAnimator.gameObject.SetActive(false);
         }
     }
 }

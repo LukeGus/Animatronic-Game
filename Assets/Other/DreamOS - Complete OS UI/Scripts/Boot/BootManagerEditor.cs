@@ -55,7 +55,6 @@ namespace Michsky.DreamOS
 
                 case 1:
                     DreamOSEditorHandler.DrawHeader(customSkin, "Core Header", 6);
-                    DreamOSEditorHandler.DrawProperty(bootAnimator, customSkin, "Boot Animator");
                     DreamOSEditorHandler.DrawProperty(userManager, customSkin, "User Manager");
                     break;
 

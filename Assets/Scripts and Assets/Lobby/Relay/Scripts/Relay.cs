@@ -24,7 +24,6 @@ public class Relay : MonoBehaviour
         await UnityServices.InitializeAsync();
 
         AuthenticationService.Instance.SignedIn += () => {
-            Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
         
         if (!AuthenticationService.Instance.IsSignedIn)

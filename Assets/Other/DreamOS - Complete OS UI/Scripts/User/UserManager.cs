@@ -111,7 +111,6 @@ namespace Michsky.DreamOS
                 if (userCreated == 0)
                 {
                     bootManager.enabled = false;
-                    bootManager.bootAnimator.gameObject.SetActive(false);
                     setupScreen.gameObject.SetActive(true);
                     setupScreen.Play("Panel In");
                 }
@@ -240,9 +239,7 @@ namespace Michsky.DreamOS
         public void BootSystem()
         {
             bootManager.enabled = true;
-            bootManager.bootAnimator.gameObject.SetActive(true);
             setupScreen.gameObject.SetActive(false);
-            bootManager.bootAnimator.Play("Boot Start");
         }
 
         public void StartOS()

@@ -47,7 +47,6 @@ namespace Michsky.DreamOS
                     DreamOSEditorHandler.DrawHeader(customSkin, "Core Header", 6);
                     DreamOSEditorHandler.DrawProperty(mainCanvas, customSkin, "Main Canvas");
                     DreamOSEditorHandler.DrawProperty(bootManager, customSkin, "Boot Manager");
-                    DreamOSEditorHandler.DrawProperty(restartScreen, customSkin, "Reboot Screen");
                     break;
 
                 case 1:
