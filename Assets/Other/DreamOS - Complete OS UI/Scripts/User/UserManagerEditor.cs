@@ -164,7 +164,6 @@ namespace Michsky.DreamOS
                     DreamOSEditorHandler.DrawProperty(desktopScreen, customSkin, "Desktop Screen");
                     DreamOSEditorHandler.DrawProperty(lockScreen, customSkin, "Lock Screen");
                     DreamOSEditorHandler.DrawProperty(lockScreenPassword, customSkin, "Lock Screen Pass");
-                    DreamOSEditorHandler.DrawProperty(lockScreenBlur, customSkin, "Lock Screen Blur");
                     DreamOSEditorHandler.DrawProperty(ppItem, customSkin, "PP Button");
                     DreamOSEditorHandler.DrawProperty(ppParent, customSkin, "PP Parent");          
                     break;

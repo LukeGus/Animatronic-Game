@@ -40,7 +40,6 @@ namespace Michsky.DreamOS
             {
                 PlayerPrefs.SetString(userManager.machineID + "User" + "Password", newPassword.text);
                 userManager.password = newPassword.text;
-                userManager.hasPassword = true;
                 modalManager.CloseWindow();
                 newPassword.text = "";
                 newPasswordRetype.text = "";

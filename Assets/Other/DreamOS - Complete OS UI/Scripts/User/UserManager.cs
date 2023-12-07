@@ -15,7 +15,6 @@ namespace Michsky.DreamOS
         public Animator lockScreen;
         public Animator desktopScreen;
         public TMP_InputField lockScreenPassword;
-        public BlurManager lockScreenBlur;
         public ProfilePictureLibrary ppLibrary;
         public GameObject ppItem;
         public Transform ppParent;
@@ -55,8 +54,7 @@ namespace Michsky.DreamOS
         [HideInInspector] public string secQuestion;
         [HideInInspector] public string secAnswer;
         [HideInInspector] public Sprite profilePicture;
-
-        [HideInInspector] public bool hasPassword;
+        
         [HideInInspector] public bool nameOK;
         [HideInInspector] public bool lastNameOK;
         [HideInInspector] public bool passwordOK;
@@ -103,10 +101,6 @@ namespace Michsky.DreamOS
 
                 profilePicture = ppLibrary.pictures[ppIndex].pictureSprite;
 
-                // If password is null, change boolean
-                if (password == "") { hasPassword = false; }
-                else { hasPassword = true; }
-
                 // If user is not created, show Setup screen
                 if (userCreated == 0)
                 {
@@ -119,10 +113,6 @@ namespace Michsky.DreamOS
 
             else
             {
-                // If password is null, change boolean
-                if (systemPassword == "") { hasPassword = false; }
-                else { hasPassword = true; }
-
                 // Setting up the user details
                 firstName = systemUsername;
                 lastName = systemLastname;
@@ -163,22 +153,10 @@ namespace Michsky.DreamOS
             UpdateUserInfoUI();
         }
 
-        public void ChangeFirstName(string textVar)
-        {
-            firstName = textVar;
-            if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "FirstName", firstName); }
-        }
-
         public void ChangeFirstNameTMP(TMP_InputField tmpVar)
         {
             firstName = tmpVar.text;
             if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "FirstName", firstName); }
-        }
-
-        public void ChangeLastName(string textVar)
-        {
-            lastName = textVar;
-            if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "LastName", lastName); }
         }
 
         public void ChangeLastNameTMP(TMP_InputField tmpVar)
@@ -187,21 +165,13 @@ namespace Michsky.DreamOS
             if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "LastName", lastName); }
         }
 
-        public void ChangePassword(string textVar)
-        {
-            password = textVar;
-            if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "Password", password); }
-        }
-
         public void ChangePasswordTMP(TMP_InputField tmpVar)
         {
             password = tmpVar.text;
             if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "Password", password); }
         }
-
-        public void ChangeSecurityQuestion(string textVar) { PlayerPrefs.SetString(machineID + "User" + "SecQuestion", textVar); }
+        
         public void ChangeSecurityQuestionTMP(TMP_InputField tmpVar) { PlayerPrefs.SetString(machineID + "User" + "SecQuestion", tmpVar.text); }
-        public void ChangeSecurityAnswer(string textVar) { PlayerPrefs.SetString(machineID + "User" + "SecAnswer", textVar); }
         public void ChangeSecurityAnswerTMP(TMP_InputField tmpVar) { PlayerPrefs.SetString(machineID + "User" + "SecAnswer", tmpVar.text); }
 
         public void ChangeProfilePicture(int pictureIndex)
@@ -229,9 +199,6 @@ namespace Michsky.DreamOS
             userCreated = 1;
             PlayerPrefs.SetInt(machineID + "User" + "Created", userCreated);
             password = PlayerPrefs.GetString(machineID + "User" + "Password");
-
-            if (password == "") { hasPassword = false; }
-            else { hasPassword = true; }
          
             UpdateUserInfoUI();
         }
@@ -242,55 +209,22 @@ namespace Michsky.DreamOS
             setupScreen.gameObject.SetActive(false);
         }
 
-        public void StartOS()
-        {
-            if (hasPassword == true)
-            {
-                lockScreenPassword.gameObject.SetActive(false);
-                lockScreen.Play("Skip Login");
-            }
-
-            else
-            {
-                lockScreenPassword.gameObject.SetActive(true);
-                lockScreen.Play("Lock Screen In");
-            }
-        }
-
         public void LockOS()
         {
-            if (lockScreenBlur != null) { lockScreenBlur.BlurOutAnim(); }
             lockScreen.gameObject.SetActive(true);
             lockScreen.Play("Lock Screen In");
             desktopScreen.Play("Desktop Out");
             onLock.Invoke();
         }
-
+        
         public void LockScreenOpenClose()
         {
             if (isLockScreenOpen == true)
             {
-                if (lockScreenBlur != null) { lockScreenBlur.BlurOutAnim(); }
-                lockScreen.Play("Lock Screen Out");
-            }
-            else { lockScreen.Play("Lock Screen In"); }
-        }
-
-        public void LockScreenAnimate()
-        {
-            if (hasPassword == true)
-            {
-                if (lockScreenBlur != null) { lockScreenBlur.BlurInAnim(); }
-                lockScreen.Play("Lock Screen Password In");
-            }
-
-            else
-            {
-                if (lockScreenBlur != null) { lockScreenBlur.BlurOutAnim(); }
                 lockScreen.Play("Lock Screen Out");
                 desktopScreen.Play("Desktop In");
-                onLogin.Invoke();
             }
+            else { lockScreen.Play("Lock Screen In"); isLockScreenOpen = true; }
         }
 
         public void Login()
