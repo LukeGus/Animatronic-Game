@@ -14,28 +14,16 @@ namespace Michsky.DreamOS
         public Animator setupScreen;
         public Animator lockScreen;
         public Animator desktopScreen;
-        public TMP_InputField lockScreenPassword;
         public ProfilePictureLibrary ppLibrary;
         public GameObject ppItem;
         public Transform ppParent;
 
         // Content
-        [Range(1, 20)] public int minNameCharacter = 1;
-        [Range(1, 20)] public int maxNameCharacter = 14;
+        [Range(1, 20)] public int minEmailCharacter = 1;
+        [Range(1, 20)] public int maxEmailCharacter = 14;
 
         [Range(1, 20)] public int minPasswordCharacter = 4;
         [Range(1, 20)] public int maxPasswordCharacter = 16;
-
-        // Events
-        public UnityEvent onLogin;
-        public UnityEvent onLock;
-        public UnityEvent onWrongPassword;
-
-        public string systemUsername = "Admin";
-        public string systemLastname = "";
-        public string systemPassword = "1234";
-        public string systemSecurityQuestion = "Answer: DreamOS";
-        public string systemSecurityAnswer = "DreamOS";
 
         // Settings
         public bool disableUserCreating = false;
@@ -48,15 +36,10 @@ namespace Michsky.DreamOS
         public string machineID = "DreamOS";
 
         // User variables
-        [HideInInspector] public string firstName;
-        [HideInInspector] public string lastName;
+        [HideInInspector] public string email;
         [HideInInspector] public string password;
-        [HideInInspector] public string secQuestion;
-        [HideInInspector] public string secAnswer;
-        [HideInInspector] public Sprite profilePicture;
         
-        [HideInInspector] public bool nameOK;
-        [HideInInspector] public bool lastNameOK;
+        [HideInInspector] public bool emailOK;
         [HideInInspector] public bool passwordOK;
         [HideInInspector] public bool passwordRetypeOK;
         [HideInInspector] public int userCreated;
@@ -86,11 +69,8 @@ namespace Michsky.DreamOS
             if (disableUserCreating == false)
             {
                 userCreated = PlayerPrefs.GetInt(machineID + "User" + "Created");
-                firstName = PlayerPrefs.GetString(machineID + "User" + "FirstName");
-                lastName = PlayerPrefs.GetString(machineID + "User" + "LastName");
+                email = PlayerPrefs.GetString(machineID + "User" + "Email");
                 password = PlayerPrefs.GetString(machineID + "User" + "Password");
-                secQuestion = PlayerPrefs.GetString(machineID + "User" + "SecQuestion");
-                secAnswer = PlayerPrefs.GetString(machineID + "User" + "SecAnswer");
 
                 if (!PlayerPrefs.HasKey(machineID + "User" + "ProfilePicture"))
                 {
@@ -98,8 +78,6 @@ namespace Michsky.DreamOS
                     PlayerPrefs.SetInt(machineID + "User" + "ProfilePicture", ppIndex);
                 }
                 else { ppIndex = PlayerPrefs.GetInt(machineID + "User" + "ProfilePicture"); }
-
-                profilePicture = ppLibrary.pictures[ppIndex].pictureSprite;
 
                 // If user is not created, show Setup screen
                 if (userCreated == 0)
@@ -113,12 +91,6 @@ namespace Michsky.DreamOS
 
             else
             {
-                // Setting up the user details
-                firstName = systemUsername;
-                lastName = systemLastname;
-                password = systemPassword;
-                profilePicture = ppLibrary.pictures[ppIndex].pictureSprite;
-
                 BootSystem();
             }
         }
@@ -141,7 +113,6 @@ namespace Michsky.DreamOS
                 Button wpButton = go.GetComponent<Button>();
                 wpButton.onClick.AddListener(delegate 
                 { 
-                    ChangeProfilePicture(go.transform.GetSiblingIndex()); 
                     UpdateUserInfoUI();
 
                     try { wpButton.gameObject.GetComponentInParent<ModalWindowManager>().CloseWindow(); }
@@ -152,33 +123,17 @@ namespace Michsky.DreamOS
             GetAllUserInfoComps();
             UpdateUserInfoUI();
         }
-
-        public void ChangeFirstNameTMP(TMP_InputField tmpVar)
+        
+        public void ChangeEmailTMP(TMP_InputField tmpVar)
         {
-            firstName = tmpVar.text;
-            if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "FirstName", firstName); }
-        }
-
-        public void ChangeLastNameTMP(TMP_InputField tmpVar)
-        {
-            lastName = tmpVar.text;
-            if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "LastName", lastName); }
+            email = tmpVar.text;
+            if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "Email", email); }
         }
 
         public void ChangePasswordTMP(TMP_InputField tmpVar)
         {
             password = tmpVar.text;
             if (disableUserCreating == false) { PlayerPrefs.SetString(machineID + "User" + "Password", password); }
-        }
-        
-        public void ChangeSecurityQuestionTMP(TMP_InputField tmpVar) { PlayerPrefs.SetString(machineID + "User" + "SecQuestion", tmpVar.text); }
-        public void ChangeSecurityAnswerTMP(TMP_InputField tmpVar) { PlayerPrefs.SetString(machineID + "User" + "SecAnswer", tmpVar.text); }
-
-        public void ChangeProfilePicture(int pictureIndex)
-        {
-            ppIndex = pictureIndex;
-            profilePicture = ppLibrary.pictures[ppIndex].pictureSprite;
-            if (saveProfilePicture == true) { PlayerPrefs.SetInt(machineID + "User" + "ProfilePicture", ppIndex); }
         }
 
         public void UpdateUserInfoUI()
@@ -214,7 +169,6 @@ namespace Michsky.DreamOS
             lockScreen.gameObject.SetActive(true);
             lockScreen.Play("Lock Screen In");
             desktopScreen.Play("Desktop Out");
-            onLock.Invoke();
         }
         
         public void LockScreenOpenClose()
@@ -225,18 +179,6 @@ namespace Michsky.DreamOS
                 desktopScreen.Play("Desktop In");
             }
             else { lockScreen.Play("Lock Screen In"); isLockScreenOpen = true; }
-        }
-
-        public void Login()
-        {
-            if (lockScreenPassword.text == password)
-            {
-                lockScreen.Play("Lock Screen Password Out");
-                desktopScreen.Play("Desktop In");
-                onLogin.Invoke();
-                StartCoroutine("DisableLockScreenHelper");
-            }
-            else if (lockScreenPassword.text != password) { onWrongPassword.Invoke(); }
         }
 
         IEnumerator DisableLockScreenHelper()

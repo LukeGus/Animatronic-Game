@@ -40,8 +40,8 @@ namespace Michsky.DreamOS
             GUILayout.EndHorizontal();
 
             var errorMessage = serializedObject.FindProperty("errorMessage");
-            var minNameCharacter = serializedObject.FindProperty("minNameCharacter");
-            var maxNameCharacter = serializedObject.FindProperty("maxNameCharacter");
+            var minEmailCharacter = serializedObject.FindProperty("minEmailCharacter");
+            var maxEmailCharacter = serializedObject.FindProperty("maxEmailCharacter");
             var minPasswordCharacter = serializedObject.FindProperty("minPasswordCharacter");
             var maxPasswordCharacter = serializedObject.FindProperty("maxPasswordCharacter");
             var systemUsername = serializedObject.FindProperty("systemUsername");
@@ -63,9 +63,6 @@ namespace Michsky.DreamOS
             var ppItem = serializedObject.FindProperty("ppItem");
             var ppParent = serializedObject.FindProperty("ppParent");
             var ppIndex = serializedObject.FindProperty("ppIndex");
-            var saveProfilePicture = serializedObject.FindProperty("saveProfilePicture");
-            var systemSecurityQuestion = serializedObject.FindProperty("systemSecurityQuestion");
-            var systemSecurityAnswer = serializedObject.FindProperty("systemSecurityAnswer");
 
             switch (currentTab)
             {
@@ -76,11 +73,11 @@ namespace Michsky.DreamOS
                     if (disableUserCreating.boolValue == false)
                     {
                         GUILayout.BeginVertical(EditorStyles.helpBox);
-                        EditorGUILayout.LabelField(new GUIContent("Min / Max Name Char"), customSkin.FindStyle("Text"), GUILayout.Width(150));
+                        EditorGUILayout.LabelField(new GUIContent("Min / Max Email Char"), customSkin.FindStyle("Text"), GUILayout.Width(150));
                         GUILayout.BeginHorizontal();
 
-                        minNameCharacter.intValue = EditorGUILayout.IntSlider(minNameCharacter.intValue, 0, maxNameCharacter.intValue - 1);
-                        maxNameCharacter.intValue = EditorGUILayout.IntSlider(maxNameCharacter.intValue, minNameCharacter.intValue + 1, 20);
+                        minEmailCharacter.intValue = EditorGUILayout.IntSlider(minEmailCharacter.intValue, 0, maxEmailCharacter.intValue - 1);
+                        maxEmailCharacter.intValue = EditorGUILayout.IntSlider(maxEmailCharacter.intValue, minEmailCharacter.intValue + 1, 20);
 
                         GUILayout.EndHorizontal();
                         GUILayout.EndVertical();
@@ -99,62 +96,10 @@ namespace Michsky.DreamOS
 
                     else
                     {
-                        DreamOSEditorHandler.DrawProperty(systemUsername, customSkin, "Username");
-                        DreamOSEditorHandler.DrawProperty(systemLastname, customSkin, "Lastname");
+                        DreamOSEditorHandler.DrawProperty(systemUsername, customSkin, "Email");
                         DreamOSEditorHandler.DrawProperty(systemPassword, customSkin, "Password");
-                        DreamOSEditorHandler.DrawProperty(systemSecurityQuestion, customSkin, "Security Question");
-                        DreamOSEditorHandler.DrawProperty(systemSecurityAnswer, customSkin, "Security Answer");
                     }
-
-                    GUILayout.BeginVertical(EditorStyles.helpBox);
-                    GUILayout.BeginHorizontal();
-
-                    DreamOSEditorHandler.DrawProperty(ppLibrary, customSkin, "Profile Picture Library");
-
-                    GUILayout.EndHorizontal();
-
-                    saveProfilePicture.boolValue = DreamOSEditorHandler.DrawToggle(saveProfilePicture.boolValue, customSkin, "Save Profile Picture");
-
-                    if (userTarget.ppLibrary != null)
-                    {
-                        if (userTarget.ppLibrary.pictures.Count != 0)
-                        {
-                            GUILayout.Space(-3);
-                            GUILayout.BeginHorizontal();
-                            GUI.backgroundColor = Color.clear;
-
-                            GUILayout.Box(TextureFromSprite(userTarget.ppLibrary.pictures[ppIndex.intValue].pictureSprite), GUILayout.Width(52), GUILayout.Height(52));
-
-                            GUI.backgroundColor = defaultColor;
-                            GUILayout.BeginVertical();
-                            GUILayout.Space(4);
-                            GUI.enabled = false;
-
-                            EditorGUILayout.LabelField(new GUIContent("Selected Profile Picture"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                           
-                            GUI.enabled = true;
-                            GUILayout.Space(-4);
-
-                            EditorGUILayout.LabelField(new GUIContent(userTarget.ppLibrary.pictures[ppIndex.intValue].pictureID), customSkin.FindStyle("Text"), GUILayout.Width(112));
-                            GUILayout.Space(-4);
-                            ppIndex.intValue = EditorGUILayout.IntSlider(ppIndex.intValue, 0, userTarget.ppLibrary.pictures.Count - 1);
-
-                            GUILayout.Space(2);
-                            GUILayout.EndVertical();
-                            GUILayout.EndHorizontal();
-                        }
-
-                        else { EditorGUILayout.HelpBox("There is no item in the library.", MessageType.Warning); }
-                    }
-
-                    else { EditorGUILayout.HelpBox("Profile Picture Library is missing.", MessageType.Error); }
-
-                    GUILayout.EndVertical();
-
-                    DreamOSEditorHandler.DrawHeader(customSkin, "Events Header", 10);
-                    EditorGUILayout.PropertyField(onLogin, new GUIContent("On Login"));
-                    EditorGUILayout.PropertyField(onLock, new GUIContent("On Lock"));
-                    EditorGUILayout.PropertyField(onWrongPassword, new GUIContent("On Wrong Password"));
+                    
                     break;
 
                 case 1:
@@ -163,7 +108,6 @@ namespace Michsky.DreamOS
                     DreamOSEditorHandler.DrawProperty(bootManager, customSkin, "Boot Manager");
                     DreamOSEditorHandler.DrawProperty(desktopScreen, customSkin, "Desktop Screen");
                     DreamOSEditorHandler.DrawProperty(lockScreen, customSkin, "Lock Screen");
-                    DreamOSEditorHandler.DrawProperty(lockScreenPassword, customSkin, "Lock Screen Pass");
                     DreamOSEditorHandler.DrawProperty(ppItem, customSkin, "PP Button");
                     DreamOSEditorHandler.DrawProperty(ppParent, customSkin, "PP Parent");          
                     break;

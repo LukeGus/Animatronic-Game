@@ -12,8 +12,7 @@ namespace Michsky.DreamOS
 
         // Resources
         public UserManager userManager;
-        [SerializeField] private TMP_InputField firstNameInput;
-        [SerializeField] private TMP_InputField lastNameInput;
+        [SerializeField] private TMP_InputField emailInput;
         [SerializeField] private TMP_InputField passwordInput;
         [SerializeField] private TMP_InputField passwordRetypeInput;
         [SerializeField] private Button infoContinueButton;
@@ -24,8 +23,7 @@ namespace Michsky.DreamOS
         // Settings
         [SerializeField] private int currentPanelIndex = 0;
         [SerializeField] private bool enableBackgroundAnim = true;
-        [SerializeField][TextArea] private string firstNameLengthError;
-        [SerializeField][TextArea] private string lastNameLengthError;
+        [SerializeField][TextArea] private string emailLengthError;
         [SerializeField][TextArea] private string passwordLengthError;
         [SerializeField][TextArea] private string passwordRetypeError;
 
@@ -57,7 +55,7 @@ namespace Michsky.DreamOS
             public StepContent stepContent;
         }
 
-        public enum StepContent { Default, Information, Privacy }
+        public enum StepContent { Default, Information, FinalTouches }
 
         void Awake()
         {
@@ -91,36 +89,15 @@ namespace Michsky.DreamOS
 
             if (steps[currentPanelIndex].stepContent == StepContent.Information)
             {
-                if (firstNameInput.text.Length >= userManager.minNameCharacter && firstNameInput.text.Length <= userManager.maxNameCharacter)
+                if (emailInput.text.Length >= userManager.minEmailCharacter && emailInput.text.Length <= userManager.maxEmailCharacter)
                 {
-                    userManager.nameOK = true;
-
-                    if (lastNameInput.text.Length >= userManager.minNameCharacter && lastNameInput.text.Length <= userManager.maxNameCharacter)
-                    {
-                        userManager.lastNameOK = true;
-                        infoContinueButton.interactable = true;
-
-                        if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("Out"))
-                            errorMessageObject.Play("Out");
-                    }
-
-                    else
-                    {
-                        userManager.lastNameOK = false;
-                        infoContinueButton.interactable = false;
-                        errorMessageText.text = lastNameLengthError;
-                        LayoutRebuilder.ForceRebuildLayoutImmediate(errorMessageText.transform.parent.GetComponent<RectTransform>());
-
-                        if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("In"))
-                            errorMessageObject.Play("In");
-                    }
-                }
-
-                else
+                    userManager.emailOK = true;
+                } else
                 {
-                    userManager.nameOK = false;
+                    userManager.emailOK = false;
                     infoContinueButton.interactable = false;
-                    errorMessageText.text = firstNameLengthError;
+                    errorMessageText.text = emailLengthError;
+                    
                     LayoutRebuilder.ForceRebuildLayoutImmediate(errorMessageText.transform.parent.GetComponent<RectTransform>());
 
                     if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("In"))
@@ -128,7 +105,7 @@ namespace Michsky.DreamOS
                 }
             }
 
-            else if (steps[currentPanelIndex].stepContent == StepContent.Privacy)
+            else if (steps[currentPanelIndex].stepContent == StepContent.Information)
             {
                 if (passwordInput.text.Length >= userManager.minPasswordCharacter && passwordInput.text.Length <= userManager.maxPasswordCharacter || passwordInput.text.Length == 0)
                 {

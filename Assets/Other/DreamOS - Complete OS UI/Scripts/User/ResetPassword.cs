@@ -25,12 +25,6 @@ namespace Michsky.DreamOS
                 securityQuestion.text = PlayerPrefs.GetString(userManager.machineID + "User" + "SecQuestion");
                 tempSecAnswer = PlayerPrefs.GetString(userManager.machineID + "User" + "SecAnswer");
             }
-
-            else
-            {
-                securityQuestion.text = userManager.systemSecurityQuestion;
-                tempSecAnswer = userManager.systemSecurityAnswer;
-            }
         }
 
         public void ChangePassword()

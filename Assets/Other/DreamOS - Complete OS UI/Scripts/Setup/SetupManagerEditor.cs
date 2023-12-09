@@ -42,16 +42,13 @@ namespace Michsky.DreamOS
             var steps = serializedObject.FindProperty("steps");
             var enableBackgroundAnim = serializedObject.FindProperty("enableBackgroundAnim");
             var userManager = serializedObject.FindProperty("userManager");
-            var firstNameInput = serializedObject.FindProperty("firstNameInput");
-            var lastNameInput = serializedObject.FindProperty("lastNameInput");
+            var emailInput = serializedObject.FindProperty("emailInput");
             var passwordInput = serializedObject.FindProperty("passwordInput");
             var passwordRetypeInput = serializedObject.FindProperty("passwordRetypeInput");
             var infoContinueButton = serializedObject.FindProperty("infoContinueButton");
-            var privacyContinueButton = serializedObject.FindProperty("privacyContinueButton");
             var errorMessageObject = serializedObject.FindProperty("errorMessageObject");
             var errorMessageText = serializedObject.FindProperty("errorMessageText");
-            var firstNameLengthError = serializedObject.FindProperty("firstNameLengthError");
-            var lastNameLengthError = serializedObject.FindProperty("lastNameLengthError");
+            var emailLengthError = serializedObject.FindProperty("emailLengthError");
             var passwordLengthError = serializedObject.FindProperty("passwordLengthError");
             var passwordRetypeError = serializedObject.FindProperty("passwordRetypeError");
 
@@ -69,12 +66,10 @@ namespace Michsky.DreamOS
                 case 1:
                     DreamOSEditorHandler.DrawHeader(customSkin, "Core Header", 6);
                     DreamOSEditorHandler.DrawProperty(userManager, customSkin, "User Manager");
-                    DreamOSEditorHandler.DrawProperty(firstNameInput, customSkin, "First Name Input");
-                    DreamOSEditorHandler.DrawProperty(lastNameInput, customSkin, "Last Name Input");
+                    DreamOSEditorHandler.DrawProperty(emailInput, customSkin, "Email Input");
                     DreamOSEditorHandler.DrawProperty(passwordInput, customSkin, "Password Input");
                     DreamOSEditorHandler.DrawProperty(passwordRetypeInput, customSkin, "Password RT Input");
                     DreamOSEditorHandler.DrawProperty(infoContinueButton, customSkin, "Info Button");
-                    DreamOSEditorHandler.DrawProperty(privacyContinueButton, customSkin, "Privacy Button");
                     DreamOSEditorHandler.DrawProperty(errorMessageObject, customSkin, "Error Message Object");
                     DreamOSEditorHandler.DrawProperty(errorMessageText, customSkin, "Error Message Text");  
                     break;
@@ -82,8 +77,7 @@ namespace Michsky.DreamOS
                 case 2:
                     DreamOSEditorHandler.DrawHeader(customSkin, "Options Header", 6);
                     enableBackgroundAnim.boolValue = DreamOSEditorHandler.DrawToggle(enableBackgroundAnim.boolValue, customSkin, "Enable Background Anim");
-                    DreamOSEditorHandler.DrawPropertyCW(firstNameLengthError, customSkin, "First Name Length Error", -3);
-                    DreamOSEditorHandler.DrawPropertyCW(lastNameLengthError, customSkin, "Last Name Length Error", -3);
+                    DreamOSEditorHandler.DrawPropertyCW(emailLengthError, customSkin, "Email Length Error", -3);
                     DreamOSEditorHandler.DrawPropertyCW(passwordLengthError, customSkin, "Password Length Error", -3);
                     DreamOSEditorHandler.DrawPropertyCW(passwordRetypeError, customSkin, "Password Retype Error", -3);
                     break;            
