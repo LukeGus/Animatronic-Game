@@ -47,6 +47,9 @@ namespace Michsky.DreamOS
         [HideInInspector] public bool isLockScreenOpen = false;
 
         [HideInInspector] public List<GetUserInfo> guiList = new List<GetUserInfo>();
+        
+        // Other
+        private bool canPlayLockScreenIn = false;
 
         void Awake()
         {
@@ -57,7 +60,6 @@ namespace Michsky.DreamOS
             if (allowMultiInstance == false) { machineID = "DreamOS"; }
 
             InitializeUserManager();
-            InitializeProfilePictures();
         }
 
         public void InitializeUserManager()
@@ -93,35 +95,6 @@ namespace Michsky.DreamOS
             {
                 BootSystem();
             }
-        }
-
-        public void InitializeProfilePictures()
-        {
-            if (ppParent == null || ppItem == null)
-                return;
-
-            foreach (Transform child in ppParent) { Destroy(child.gameObject); }
-            for (int i = 0; i < ppLibrary.pictures.Count; ++i)
-            {
-                GameObject go = Instantiate(ppItem, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                go.transform.SetParent(ppParent, false);
-                go.name = ppLibrary.pictures[i].pictureID;
-
-                Image prevImage = go.transform.Find("Image Mask/Image").GetComponent<Image>();
-                prevImage.sprite = ppLibrary.pictures[i].pictureSprite;
-
-                Button wpButton = go.GetComponent<Button>();
-                wpButton.onClick.AddListener(delegate 
-                { 
-                    UpdateUserInfoUI();
-
-                    try { wpButton.gameObject.GetComponentInParent<ModalWindowManager>().CloseWindow(); }
-                    catch { Debug.Log("Cannot close the window due to missing modal window manager."); }
-                });
-            }
-
-            GetAllUserInfoComps();
-            UpdateUserInfoUI();
         }
         
         public void ChangeEmailTMP(TMP_InputField tmpVar)
@@ -162,6 +135,28 @@ namespace Michsky.DreamOS
         {
             bootManager.enabled = true;
             setupScreen.gameObject.SetActive(false);
+
+            Animator lockScreenAnimator = lockScreen.GetComponent<Animator>();
+            
+            if (lockScreenAnimator != null)
+            {
+                lockScreenAnimator.Play("Lock Screen In");
+            }
+        }
+        
+        public void BootFromSetup()
+        {
+            bootManager.enabled = true;
+
+            Animator lockScreenAnimator = lockScreen.GetComponent<Animator>();
+
+            if (lockScreenAnimator != null)
+            {
+                lockScreenAnimator.Play("Lock Screen Fast In");
+                
+                StartCoroutine(DisableUserSetupHelper());
+                StartCoroutine(CanPlayLockScreenInHelper());
+            }
         }
 
         public void LockOS()
@@ -178,13 +173,34 @@ namespace Michsky.DreamOS
                 lockScreen.Play("Lock Screen Out");
                 desktopScreen.Play("Desktop In");
             }
-            else { lockScreen.Play("Lock Screen In"); isLockScreenOpen = true; }
+            else if (!canPlayLockScreenIn)
+            {
+                lockScreen.Play("Lock Screen In"); isLockScreenOpen = true; canPlayLockScreenIn = true;
+            }
+        }
+
+        public void GoToDesktop()
+        {
+            desktopScreen.Play("Desktop In");
+            lockScreen.Play("Lock Screen Out");
         }
 
         IEnumerator DisableLockScreenHelper()
         {
             yield return new WaitForSeconds(1f);
             lockScreen.gameObject.SetActive(false);
+        }
+        
+        IEnumerator DisableUserSetupHelper()
+        {
+            yield return new WaitForSeconds(1f);
+            setupScreen.gameObject.SetActive(false);
+        }
+        
+        IEnumerator CanPlayLockScreenInHelper()
+        {
+            yield return new WaitForSeconds(10f);
+            canPlayLockScreenIn = true;
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Michsky.DreamOS
         [SerializeField] private TMP_InputField passwordInput;
         [SerializeField] private TMP_InputField passwordRetypeInput;
         [SerializeField] private Button infoContinueButton;
-        [SerializeField] private Button privacyContinueButton;
         [SerializeField] private Animator errorMessageObject;
         [SerializeField] private TextMeshProUGUI errorMessageText;
 
@@ -87,45 +86,60 @@ namespace Michsky.DreamOS
             if (userManager == null)
                 return;
 
+            LayoutRebuilder.ForceRebuildLayoutImmediate(errorMessageText.transform.parent.GetComponent<RectTransform>());
+
             if (steps[currentPanelIndex].stepContent == StepContent.Information)
             {
                 if (emailInput.text.Length >= userManager.minEmailCharacter && emailInput.text.Length <= userManager.maxEmailCharacter)
                 {
-                    userManager.emailOK = true;
+                    if (!userManager.emailOK)
+                    {
+                        userManager.emailOK = true;
+                        
+                        if (userManager.passwordOK)
+                            infoContinueButton.interactable = true;
+                    }
                 } else
                 {
                     userManager.emailOK = false;
                     infoContinueButton.interactable = false;
-                    errorMessageText.text = emailLengthError;
-                    
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(errorMessageText.transform.parent.GetComponent<RectTransform>());
+
+                    if (errorMessageText.text != emailLengthError && errorMessageText.text != passwordLengthError && errorMessageText.text != passwordRetypeError)
+                    {
+                        errorMessageText.text = emailLengthError;
+                    }
 
                     if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("In"))
                         errorMessageObject.Play("In");
                 }
             }
 
-            else if (steps[currentPanelIndex].stepContent == StepContent.Information)
+            if (steps[currentPanelIndex].stepContent == StepContent.Information)
             {
-                if (passwordInput.text.Length >= userManager.minPasswordCharacter && passwordInput.text.Length <= userManager.maxPasswordCharacter || passwordInput.text.Length == 0)
+                if (passwordInput.text.Length >= userManager.minPasswordCharacter && passwordInput.text.Length <= userManager.maxPasswordCharacter)
                 {
                     userManager.passwordOK = true;
 
                     if (passwordInput.text != passwordRetypeInput.text)
                     {
                         userManager.passwordRetypeOK = false;
-                        privacyContinueButton.interactable = false;
-                        errorMessageText.text = passwordRetypeError;
-                        LayoutRebuilder.ForceRebuildLayoutImmediate(errorMessageText.transform.parent.GetComponent<RectTransform>());
+                        infoContinueButton.interactable = false;
+
+                        if (errorMessageText.text != passwordRetypeError)
+                        {
+                            errorMessageText.text = passwordRetypeError;
+                        }
 
                         if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("In"))
                             errorMessageObject.Play("In");
                     }
 
-                    else if (passwordInput.text == passwordRetypeInput.text)
+                    else if (passwordInput.text == passwordRetypeInput.text && userManager.emailOK)
                     {
                         userManager.passwordRetypeOK = true;
-                        privacyContinueButton.interactable = true;
+
+                        if (userManager.emailOK)
+                            infoContinueButton.interactable = true;
 
                         if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("Out"))
                             errorMessageObject.Play("Out");
@@ -135,9 +149,12 @@ namespace Michsky.DreamOS
                 else
                 {
                     userManager.passwordOK = false;
-                    privacyContinueButton.interactable = false;
-                    errorMessageText.text = passwordLengthError;
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(errorMessageText.transform.parent.GetComponent<RectTransform>());
+                    infoContinueButton.interactable = false;
+
+                    if (errorMessageText.text != passwordRetypeError && userManager.emailOK)
+                    {
+                        errorMessageText.text = passwordLengthError;
+                    }
 
                     if (!errorMessageObject.GetCurrentAnimatorStateInfo(0).IsName("In"))
                         errorMessageObject.Play("In");
