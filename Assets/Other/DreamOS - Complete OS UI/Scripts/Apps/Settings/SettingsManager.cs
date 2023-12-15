@@ -92,26 +92,7 @@ namespace Michsky.DreamOS
 
         public void CheckForToggles()
         {
-            // Invoke color toggle depending on the data
-            foreach (Transform obj in accentColorList)
-            {
-                if (obj.name == PlayerPrefs.GetString(saveKey + "CustomTheme" + "AccentColor"))
-                {
-                    toggleHelper = obj.GetComponent<Toggle>();
-                    toggleHelper.isOn = true;
-                    toggleHelper.onValueChanged.Invoke(true);
-                }
-            }
-
-            foreach (Transform obj in accentReversedColorList)
-            {
-                if (obj.name == PlayerPrefs.GetString(saveKey + "CustomTheme" + "AccentRevColor"))
-                {
-                    toggleHelper = obj.GetComponent<Toggle>();
-                    toggleHelper.isOn = true;
-                    toggleHelper.onValueChanged.Invoke(true);
-                }
-            }
+            
         }
 
         public void SelectSystemTheme()
