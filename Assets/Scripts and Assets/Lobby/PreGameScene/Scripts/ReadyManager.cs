@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEngine.SceneManagement;
 using UnityEngine;
-using System.Linq;
 using TMPro;
 using UnityEngine.UI;
+using Michsky;
+using Michsky.MUIP;
 
 public class ReadyManager : NetworkBehaviour 
 {
@@ -19,30 +19,23 @@ public class ReadyManager : NetworkBehaviour
             value: 60f,
             NetworkVariableReadPermission.Everyone);
     
-    private NetworkVariable<float> secondaryTimer = new NetworkVariable<float>(
+    private NetworkVariable<float> initialTimer = new NetworkVariable<float>(
                 value: 10f,
                 NetworkVariableReadPermission.Everyone);
     
     [SerializeField] private float mainTimerMax;
-    [SerializeField] private float secondaryTimerMax;
+    [SerializeField] private float initialTimerMax;
     
     [SerializeField] private TMP_Text playerReadyCountText;
     [SerializeField] private TMP_Text mainTimerText;
         
     private bool mainTimerIsRunning = false;
-    private bool secondaryTimerIsRunning = false;
+    private bool initialTimerIsRunning = false;
     
     private bool hasReadyed = false;
     
-    [SerializeField] private Button readyButton;
+    [SerializeField] private ButtonManager readyButton;
     [SerializeField] private Button leaveLobbyButton;
-    
-    [SerializeField] private GameObject playerReadyObject1;
-    [SerializeField] private GameObject playerReadyObject2;
-    [SerializeField] private GameObject playerReadyObject3;
-    [SerializeField] private GameObject playerReadyObject4;
-
-    [SerializeField] private GameObject playerSelectObject1;
 
     private void Start()
     {
@@ -59,39 +52,26 @@ public class ReadyManager : NetworkBehaviour
 
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
-        
-        StartCoroutine(SetUpGame());
     }
 
-    private IEnumerator SetUpGame()
+    public IEnumerator SetUpGame()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
 
         if (NetworkManager.Singleton.IsServer)
         {
             Debug.Log("Host");
 
-            this.NetworkObject.Spawn();
+            if (!NetworkObject.IsSpawned)
+                NetworkObject.Spawn();
 
             mainTimer.Value = mainTimerMax;
-            secondaryTimer.Value = secondaryTimerMax;
+            initialTimer.Value = initialTimerMax;
 
             mainTimerIsRunning = true;
-            secondaryTimerIsRunning = true;
+            initialTimerIsRunning = true;
 
             maxPlayerReadyCount.Value = LobbyManager.Instance.playerCount;
-
-            // Make this not instantiate them all in the same spot
-
-            /*
-            for (int i = 0; i < maxPlayerReadyCount.Value; i++)
-            {
-                GameObject playerObject = Instantiate(playerReadyObject1, playerReadyObject1.transform.position,
-                    playerReadyObject1.transform.rotation);
-
-                playerObject.GetComponent<NetworkObject>().Spawn();
-            }
-            */
         }
     }
     
@@ -112,6 +92,8 @@ public class ReadyManager : NetworkBehaviour
             hasReadyed = true;
             
             Debug.Log("Ready");
+            
+            readyButton.Interactable(false);
         }
     }
 
@@ -126,7 +108,7 @@ public class ReadyManager : NetworkBehaviour
     public void StartGame()
     {
         mainTimerIsRunning = false;
-        secondaryTimerIsRunning = false;
+        initialTimerIsRunning = false;
         
         Debug.Log("Starting game");
         
@@ -149,11 +131,11 @@ public class ReadyManager : NetworkBehaviour
                 }
             }
             
-            if (secondaryTimerIsRunning)
+            if (initialTimerIsRunning)
             {
-                secondaryTimer.Value -= Time.deltaTime;
+                initialTimer.Value -= Time.deltaTime;
     
-                if (secondaryTimer.Value <= 0f)
+                if (initialTimer.Value <= 0f)
                 {
                     if (playerReadyCount.Value == maxPlayerReadyCount.Value)
                     {

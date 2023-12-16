@@ -7,6 +7,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.Netcode;
 
 public class LobbyManager : NetworkBehaviour {
@@ -41,26 +42,29 @@ public class LobbyManager : NetworkBehaviour {
     public enum GameMode {
         Regular
     }
-
-
+    
+    public GameObject startingText;
+    public Animator lobbyAnimator;
+    public Animator preGameAnimator;
 
     private float heartbeatTimer;
+    private bool useHeartbeat = true;
     private float lobbyPollTimer;
     private float refreshLobbyListTimer = 5f;
     private Lobby joinedLobby;
     private string playerName;
+    
     [HideInInspector] public string finalGameMode;
-
     [HideInInspector] public int playerCount;
 
 
     private void Awake() {
         Instance = this;
         
-        DontDestroyOnLoad(gameObject);
-        
         LobbyManager.Instance.OnJoinedLobby += OnJoinedLobbyHandler;
         LobbyManager.Instance.OnLeftLobby += OnLeftLobbyHandler;
+
+        startingText.SetActive(false);
     }
     
     private void Update() {
@@ -375,6 +379,11 @@ public class LobbyManager : NetworkBehaviour {
         {
             try
             {
+                useHeartbeat = false;
+                
+                startingText.SetActive(true);
+                ShowStartingTextClientRpc();
+
                 Debug.Log("StartGame");
 
                 string relayCode = await Relay.Instance.CreateRelay();
@@ -388,10 +397,16 @@ public class LobbyManager : NetworkBehaviour {
                 });
 
                 joinedLobby = lobby;
+
+                await WaitUntilIsHost();
                 
-                await Task.Delay(10000);
+                await Task.Delay(2000);
+
+                Debug.Log("Starting Game");
+                lobbyAnimator.Play("CloseLobby");
+                preGameAnimator.Play("OpenPreGame");
                 
-                StartManager.Instance.StartGame("PreGameScene");
+                ReadyManager.Instance.StartCoroutine(ReadyManager.Instance.SetUpGame());
             }
             catch (LobbyServiceException e)
             {
@@ -400,13 +415,41 @@ public class LobbyManager : NetworkBehaviour {
         }
     }
 
+    private async Task WaitUntilIsHost()
+    {
+        while (!NetworkManager.Singleton.IsHost)
+        {
+            await Task.Yield();
+        }
+    }
+    
+    [ClientRpc]
+    public void ShowStartingTextClientRpc(ClientRpcParams rpcParams = default)
+    {
+        startingText.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void HideStartingTextClientRpc(ClientRpcParams rpcParams = default)
+    {
+        startingText.SetActive(false);
+    }
+
     private void OnJoinedLobbyHandler(object sender, LobbyEventArgs e)
     {
         playerCount += 1;
+        
+        Debug.Log("Joined Lobby");
+
+        startingText.SetActive(false);
     }
 
     private void OnLeftLobbyHandler(object sender, EventArgs e)
     {
         playerCount -= 1;
+        
+        Debug.Log("Left Lobby");
+
+        startingText.SetActive(false);
     }
 }
