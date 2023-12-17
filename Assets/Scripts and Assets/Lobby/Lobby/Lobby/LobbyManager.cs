@@ -109,7 +109,7 @@ public class LobbyManager : NetworkBehaviour {
     }
 
     private async void HandleLobbyHeartbeat() {
-        if (IsLobbyHost()) {
+        if (IsLobbyHost() && useHeartbeat) {
             heartbeatTimer -= Time.deltaTime;
             if (heartbeatTimer < 0f) {
                 float heartbeatTimerMax = 15f;
@@ -380,8 +380,6 @@ public class LobbyManager : NetworkBehaviour {
             try
             {
                 useHeartbeat = false;
-                
-                ShowStartingTextClientRpc();
 
                 Debug.Log("StartGame");
 
@@ -400,6 +398,11 @@ public class LobbyManager : NetworkBehaviour {
                 await WaitUntilIsHost();
                 
                 await Task.Delay(2000);
+
+                if (!NetworkObject.IsSpawned)
+                    NetworkObject.Spawn();
+
+                ShowStartingTextClientRpc();
                 
                 StartGameClientRpc();
                 
