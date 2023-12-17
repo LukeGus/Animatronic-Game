@@ -381,7 +381,6 @@ public class LobbyManager : NetworkBehaviour {
             {
                 useHeartbeat = false;
                 
-                startingText.SetActive(true);
                 ShowStartingTextClientRpc();
 
                 Debug.Log("StartGame");
@@ -401,10 +400,8 @@ public class LobbyManager : NetworkBehaviour {
                 await WaitUntilIsHost();
                 
                 await Task.Delay(2000);
-
-                Debug.Log("Starting Game");
-                lobbyAnimator.Play("CloseLobby");
-                preGameAnimator.Play("OpenPreGame");
+                
+                StartGameClientRpc();
                 
                 ReadyManager.Instance.StartCoroutine(ReadyManager.Instance.SetUpGame());
             }
@@ -413,6 +410,14 @@ public class LobbyManager : NetworkBehaviour {
                 Debug.Log(e);
             }
         }
+    }
+    
+    [ClientRpc]
+    public void StartGameClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        Debug.Log("Starting Game");
+        lobbyAnimator.Play("CloseLobby");
+        preGameAnimator.Play("OpenPreGame");
     }
 
     private async Task WaitUntilIsHost()
@@ -424,13 +429,13 @@ public class LobbyManager : NetworkBehaviour {
     }
     
     [ClientRpc]
-    public void ShowStartingTextClientRpc(ClientRpcParams rpcParams = default)
+    public void ShowStartingTextClientRpc(ClientRpcParams clientRpcParams = default)
     {
         startingText.SetActive(true);
     }
 
     [ClientRpc]
-    public void HideStartingTextClientRpc(ClientRpcParams rpcParams = default)
+    public void HideStartingTextClientRpc(ClientRpcParams clientRpcParams = default)
     {
         startingText.SetActive(false);
     }
