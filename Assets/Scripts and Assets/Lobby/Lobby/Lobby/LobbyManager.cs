@@ -54,6 +54,10 @@ public class LobbyManager : NetworkBehaviour {
     private Lobby joinedLobby;
     private string playerName;
     
+    private bool canStartGame = false;
+    
+    public NetworkVariable<int> playersReadyToStartPreGame = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
+    
     [HideInInspector] public string finalGameMode;
     [HideInInspector] public int playerCount;
 
@@ -397,7 +401,9 @@ public class LobbyManager : NetworkBehaviour {
 
                 await WaitUntilIsHost();
                 
-                await Task.Delay(2000);
+                await WaitUntilCanStartGame();
+                
+                await Task.Delay(4000);
 
                 if (!NetworkObject.IsSpawned)
                     NetworkObject.Spawn();
@@ -412,6 +418,23 @@ public class LobbyManager : NetworkBehaviour {
             {
                 Debug.Log(e);
             }
+        }
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void ReadyPlayerServerRpc(ServerRpcParams rpcParams = default)
+    {
+        playersReadyToStartPreGame.Value += 1;
+        
+        if(playersReadyToStartPreGame.Value == playerCount)
+            canStartGame = true;
+    }
+    
+    private async Task WaitUntilCanStartGame()
+    {
+        while (!canStartGame)
+        {
+            await Task.Yield();
         }
     }
     
