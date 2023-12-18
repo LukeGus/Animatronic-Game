@@ -403,6 +403,8 @@ public class LobbyManager : NetworkBehaviour {
                 
                 await WaitUntilCanStartGame();
                 
+                Debug.Log("Starting Game Soon");
+                
                 await Task.Delay(4000);
 
                 if (!NetworkObject.IsSpawned)
@@ -424,6 +426,8 @@ public class LobbyManager : NetworkBehaviour {
     [ServerRpc(RequireOwnership = false)]
     public void ReadyPlayerServerRpc(ServerRpcParams rpcParams = default)
     {
+        Debug.Log("Player Ready");
+        
         playersReadyToStartPreGame.Value += 1;
         
         if(playersReadyToStartPreGame.Value == playerCount)
