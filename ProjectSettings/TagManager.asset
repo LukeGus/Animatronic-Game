@@ -14,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - WallRunWall
-  - NotWallRunWall
+  - Obstacles
+  - Player
   - 
   - 
   - 

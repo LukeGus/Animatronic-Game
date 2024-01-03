@@ -47,7 +47,7 @@ EditorUserBuildSettings.xboxBuildSubtarget,0§
 EditorUserBuildSettings.xboxOneDeployMethod,0§
 EditorUserBuildSettings.streamingInstallLaunchRange,0§
 EditorUserBuildSettings.xboxOneDeployDrive,0§
-Scene0,  §
+Scene0,Assets/Scenes/Game/Regular.unity§
 macOS,True§
 macOSBatch,False§
 macOSBatchPath,  §

@@ -12,7 +12,7 @@ public class ReadyManager : NetworkBehaviour
 {
     public static ReadyManager Instance { get; private set; }
     
-    private NetworkVariable<int> playerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
+    public NetworkVariable<int> playerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
     private NetworkVariable<int> maxPlayerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
     
     private NetworkVariable<float> mainTimer = new NetworkVariable<float>(
@@ -28,7 +28,7 @@ public class ReadyManager : NetworkBehaviour
     
     [SerializeField] private TMP_Text playerReadyCountText;
     [SerializeField] private TMP_Text mainTimerText;
-        
+    
     private bool mainTimerIsRunning = false;
     private bool initialTimerIsRunning = false;
     
@@ -52,6 +52,13 @@ public class ReadyManager : NetworkBehaviour
 
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
+        
+        DontDestroyOnLoad(gameObject);
+    }
+    
+    public void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 
     public IEnumerator SetUpGame()
@@ -102,7 +109,7 @@ public class ReadyManager : NetworkBehaviour
     {
         playerReadyCount.Value += 1;
         
-        Debug.Log("Player ready");
+        Debug.Log("Player Ready");
     }
 
     public void StartGame()
@@ -110,7 +117,7 @@ public class ReadyManager : NetworkBehaviour
         mainTimerIsRunning = false;
         initialTimerIsRunning = false;
         
-        Debug.Log("Starting game");
+        Debug.Log("Starting Game");
         
         string gameMode = LobbyManager.Instance.finalGameMode;
         
@@ -174,7 +181,7 @@ public class ReadyManager : NetworkBehaviour
             maxPlayerReadyCount.Value -= 1;
         }
         
-        Debug.Log("Player disconnected");
+        Debug.Log("Player Disconnected");
 
         if (maxPlayerReadyCount.Value == 1)
         {

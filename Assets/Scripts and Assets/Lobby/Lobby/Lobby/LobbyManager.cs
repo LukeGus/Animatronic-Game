@@ -461,7 +461,7 @@ public class LobbyManager : NetworkBehaviour {
     [ClientRpc]
     public void ShowStartingTextClientRpc(ClientRpcParams clientRpcParams = default)
     {
-        startingText.SetActive(true);
+        //startingText.SetActive(true);
     }
 
     [ClientRpc]
