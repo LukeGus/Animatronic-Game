@@ -1,13 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class ClickMovement : MonoBehaviour
 {
-    public Camera topDownCamera;public GameOb\
-    
+    public AIPath path;
+    public Camera topDownCamera;
+    public Camera playerCamera;
+    public Transform target;
+
+    private bool canShowPlayerCamera = true;
+    private float playerCameraCooldown = 1f; // Set the cooldown duration in seconds
+
     void Update()
     {
+        if (!path.reachedEndOfPath)
+        {
+            ShowPlayerCameraWithCooldown();
+        }
+        else
+        {
+            ShowTopDownCamera();
+        }
+
         // Check for left mouse button click
         if (Input.GetMouseButtonDown(0))
         {
@@ -23,12 +39,41 @@ public class ClickMovement : MonoBehaviour
                     // Calculate the distance between the player and the clicked point
                     float distance = Vector3.Distance(transform.position, hit.point);
 
-                    // Print the distance to the console (you can use it as needed)
-                    Debug.Log("Distance to Clicked Point: " + distance);
-
-                    // Here, you can perform any other actions based on the clicked position
-                    // For example, move the player to the clicked point:
-                    // transform.position = hit.point;
+                    if (EnergyManager.Instance.currentEnergy >= distance)
+                    {
+                        target.position = hit.point;
+                        EnergyManager.Instance.currentEnergy -= distance;
+                    }
                 }
             }
-       
+        }
+    }
+
+    public void ShowPlayerCameraWithCooldown()
+    {
+        if (canShowPlayerCamera)
+        {
+            ShowPlayerCamera();
+            StartCoroutine(PlayerCameraCooldown());
+        }
+    }
+
+    IEnumerator PlayerCameraCooldown()
+    {
+        canShowPlayerCamera = false;
+        yield return new WaitForSeconds(playerCameraCooldown);
+        canShowPlayerCamera = true;
+    }
+
+    public void ShowPlayerCamera()
+    {
+        playerCamera.gameObject.SetActive(true);
+        topDownCamera.gameObject.SetActive(false);
+    }
+
+    public void ShowTopDownCamera()
+    {
+        playerCamera.gameObject.SetActive(false);
+        topDownCamera.gameObject.SetActive(true);
+    }
+}

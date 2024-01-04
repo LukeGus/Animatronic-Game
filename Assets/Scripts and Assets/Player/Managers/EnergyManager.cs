@@ -1,14 +1,28 @@
 using UnityEngine;
+using TMPro;
 
 public class EnergyManager : MonoBehaviour
 {
+    public static EnergyManager Instance { get; set; }
+    
     public float maxEnergy;
     public float energyIncreaseRate;
-    private float currentEnergy;
+    public float currentEnergy;
+    
+    public TMP_Text energyText;
 
     void Start()
     {
         currentEnergy = 0f;
+        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Update()
@@ -18,5 +32,7 @@ public class EnergyManager : MonoBehaviour
             currentEnergy += energyIncreaseRate * Time.deltaTime;
             currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
         }
+        
+        energyText.text = "Energy: " + Mathf.RoundToInt(currentEnergy);
     }
 }
