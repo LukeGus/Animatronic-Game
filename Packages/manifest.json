@@ -6,6 +6,8 @@
     "com.unity.cinemachine": "2.9.7",
     "com.unity.feature.development": "1.0.2",
     "com.unity.inputsystem": "1.7.0",
+    "com.unity.meshsync": "file:C:/Users/bugat/Documents/com.unity.meshsync-0.17.3-preview.tgz",
+    "com.unity.meshsync.dcc-plugins": "0.17.1-preview",
     "com.unity.multiplayer.samples.coop": "https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop.git?path=/Packages/com.unity.multiplayer.samples.coop#main",
     "com.unity.netcode.gameobjects": "1.6.0",
     "com.unity.postprocessing": "3.3.0",

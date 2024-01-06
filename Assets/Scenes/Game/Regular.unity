@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 208730170}
   - component: {fileID: 208730169}
   - component: {fileID: 208730168}
-  - component: {fileID: 208730173}
+  - component: {fileID: 208730174}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACQn+tS2R++ZwIAAB8FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty4jAQ/BVK5w1l8wrsbddJyB6SUCFbufgipDFWIUsuSQ6QFP++I1lgLzlherpneh72FxHK1sCcNksj+JPmQH4OiH8mPwZd8BEOdKvVWnzCmfMuuCs9iQbOK3VCI556mdUVOCPYL7WVnpwg2ChRaFPd8y1k2jqLcEGlBQwZ7bxaIfQ1IIcoOMbfT/87OOETA+XAdKx0MUxnt/PZeB7pN+l8OJtGzc1iOA2yRjFJqxq4t9+pR4tRlKXTlqiwtcjxbTAtpbDRF3HHOvSd0do22BUSuKDYZ3CUzvB/CWJbOp+6r34pCgsuNmPo8U4YnFeblvzW7RAranettQ8qG19oNgme2pxP38PjEC6Mrh7PZdPEl3ClYLtXemTUut6Q+/Bdz3gY0J7KHd1IeC9BPeul0Y3iGHSm8dLGwuiul+rSWlYC23W81usV2NTf15p2az2F5g+ZFNXGI8NJC6ylDvNeeA0Y3MwfNBzOxMZMiHoTfy280W3/nmLgQRjrMBQLKu9uoxvjqeQBH/zgWeMybRQENFquQVHpjivM4q4XeBXrVb2KPFD/4sTaMXZ+H64kAe74SXIVWun9ZVe21PsnsOVL46RQ0Jn2gWccU6aVau+rP5KzbN2YgrKebNsI/v9lkWIzXkymfDxiCR0n6eRmvJkWM55MNgB0DsUtCacnFPZJ5ao1GseDS1NdcoVndv6eDJaG1uHWuaH7pfisdG/kQhV6zQyAemkzXIyDwSL4UvJ7LnBAa3BOqLBu8pUTqdkOeH5JlIdO7w/O0LzLkpNafGjnkZxk4SuSEw9fLnll4EPA3hc/JzuR0z9QSwMEFAAACAgAAJCf64RR/cBtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tFJakrGliWmKsVGyQaKxgaGJrnGSaZpZioFJUmpqokVqmrlSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJCf61LZH75nAgAAHwUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJCf64RR/cBtAAAAeAAAAAkAJAAAAAAAAAAAAAAAtAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABsAwAAAAA=
+    dataString: UEsDBBQAAAgIAACQn+sDD9dgYwIAAB8FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMly4jAQ/RVK54Gy2QJzmzGEzIGECpnKxRdhtbEKWXJpCVvx7yPJAnuck12v3+t+vdhXRLmqINNCriQla0EA/ewh945+9JrgC5zwXvAtvcCd80mJLhwJe8471lRYPHYyJUrQkma/+J45cmRBw2kuZLkke0iE0srCOWYKbEgK7dTcQtceOgXBOTwv7tm72bcMuAbZsOL5IJ4+zaajWaD349lgOgma/nww8TLDM4bLCoiz36iH82GQxZOayG1rgePayARjVAVfSJ8r33eCK2VsV5ZAKLZ9ekexq1oA3RfapW6r3/JcgQ7NSHxeUGnnVadFv0U9xBKrQ23tCzPjCk3H3lOdc/09PPLhXIry5V42jlwJXdDs8I7PGVYO1NJAB120fPv5HDE74B2DzwL4q1hJYThppEbBcNFa16OzpIDs0PBqqx3QVN+3GjdbvfneTwmj5c4hg3ENbJnw4547DUi7mD/WsL8SFTJZ1Jn4q+AD79vnFALPVCptQ6Egd+52wkhHRUs/MteM0YmQHDwcPFfAMdPnjU2juwvsxFplO5Fn7D6cUDzE7t9DR+Lhhh9FndBGHB/LUoU4rkEVb0YzyqEx7QKvdk6J4Ly+r/ZM7rKtkTnOWrK9oeT/y0L5bjQfT8homEV4FMXj/mg3yackGu8A8AzyJ+RPj3LbJ2ab2mgYj90ab5Jze2f3/0lvJXHlb51IfFzRSylaI6c8F9tMAvC3OsPDOEhbxH6UZEmoHdAWtKbc7xtdU8REdgCSPhKlvtPlSUucNllSVNEvoR2SosT/RVLk4McpbyR8UTi64vdkN3T7B1BLAwQUAAAICAAAkJ/rhFH9wG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0UlqSsaWJaYqxUbJBorGBoYmucZJpmlmKgUlSamqiRWqauVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAkJ/rAw/XYGMCAAAfBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAkJ/rhFH9wG0AAAB4AAAACQAkAAAAAAAAAAAAAACwAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGgDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   topDownCamera: {fileID: 973965375}
   playerCamera: {fileID: 1702427443}
   target: {fileID: 2057115932}
---- !u!114 &208730173
+--- !u!114 &208730174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1026,20 +1026,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 208730166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b090bec917bbe4c3bbc612ef13f7c4a1, type: 3}
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  useRaycasting: 1
-  mask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  thickRaycast: 0
-  thickRaycastRadius: 1
-  use2DPhysics: 0
-  raycastOffset: {x: 0, y: 0, z: 0}
-  useGraphRaycasting: 1
-  quality: 3
+  smoothType: 0
+  subdivisions: 2
+  iterations: 6
+  strength: 1
+  uniformLength: 1
+  maxSegmentLength: 2
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!1 &221909326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,7 +1630,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -7.41, z: 0}
-  m_LocalScale: {x: 55, y: 55, z: 55}
+  m_LocalScale: {x: 34.96, y: 55, z: 70}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 641422266}
