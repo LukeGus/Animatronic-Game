@@ -35,7 +35,9 @@ namespace Michsky.DreamOS
         {
             yield return new WaitForSeconds(bootTime);
 
-            userManager.lockScreen.gameObject.SetActive(true);
+            if(userManager != null)
+                userManager.lockScreen.gameObject.SetActive(true);
+            
             eventsAfterBoot.Invoke();
 
             StopCoroutine("BootEventStart");
