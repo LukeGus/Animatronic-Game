@@ -5,9 +5,7 @@ using Pathfinding;
 
 public class ClickMovement : MonoBehaviour
 {
-    public AIPath path;
-    public Camera topDownCamera;
-    public Camera playerCamera;
+    public Camera camera;
     public Transform target;
 
     private bool canShowPlayerCamera = true;
@@ -15,20 +13,10 @@ public class ClickMovement : MonoBehaviour
 
     void Update()
     {
-        if (!path.reachedEndOfPath)
-        {
-            ShowPlayerCameraWithCooldown();
-        }
-        else
-        {
-            ShowTopDownCamera();
-        }
-
-        // Check for left mouse button click
         if (Input.GetMouseButtonDown(0))
         {
             // Raycast from the camera to the mouse position
-            Ray ray = topDownCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -47,33 +35,5 @@ public class ClickMovement : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void ShowPlayerCameraWithCooldown()
-    {
-        if (canShowPlayerCamera)
-        {
-            ShowPlayerCamera();
-            StartCoroutine(PlayerCameraCooldown());
-        }
-    }
-
-    IEnumerator PlayerCameraCooldown()
-    {
-        canShowPlayerCamera = false;
-        yield return new WaitForSeconds(playerCameraCooldown);
-        canShowPlayerCamera = true;
-    }
-
-    public void ShowPlayerCamera()
-    {
-        playerCamera.gameObject.SetActive(true);
-        topDownCamera.gameObject.SetActive(false);
-    }
-
-    public void ShowTopDownCamera()
-    {
-        playerCamera.gameObject.SetActive(false);
-        topDownCamera.gameObject.SetActive(true);
     }
 }
