@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using UnityEngine.Events;
 
 namespace ProceduralLevelGenerator
 {
@@ -18,33 +19,38 @@ namespace ProceduralLevelGenerator
         public Transform roomsParent;
         public GameObject spawnPoint;
         public GameObject finishPoint;
-
+        
         [SerializeField]
         private int scaleMulty = 5;
-
-        [Header("Client Info")]
-        public int getMaxBranching;
-
-        private void Start()
+        public int maxBranching;
+        
+        public string finalMatrix;
+        
+        public StartManager startManager;
+        
+        public event EventHandler OnGenerationComplete;
+        
+        public void Start()
         {
-            if (IsClient)
-            {
-                RunClient(GetMatrix());
-            }
-            else
-            {
-                RunServer();
-            }
+            StartManager.OnGameStartedEvent += RunServer;
         }
         
-        private string GetMatrix()
+        void Update()
         {
-            return GetComponent<GenerationMap>().finalMatrix.Value;
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RunServer(null, null);
+            }
         }
 
-        void RunServer()
+        void RunServer(object sender, EventArgs e)
         {
+            Debug.Log("RunServer");
+            
             GetComponent<GenerationMap>().GenerationMatrix();
+            
+            finalMatrix = GetComponent<GenerationMap>().finalMatrix;
+            SendMatrixcClientRpc(finalMatrix);
 
             maxLength = GenerationMap.maxLength;
 
@@ -96,11 +102,16 @@ namespace ProceduralLevelGenerator
             BuildRooms();
         }
 
+        [ClientRpc]
+        public void SendMatrixcClientRpc(string finalMatrix)
+        {
+            RunClient(finalMatrix);
+        }
 
         void RunClient(string _getMatrix)
         {
 
-            maxLength = getMaxBranching * 3 * 2 + 3;
+            maxLength = maxBranching * 3 * 2 + 3;
 
             finalArr = new string[maxLength * maxLength];
 
@@ -207,6 +218,8 @@ namespace ProceduralLevelGenerator
                 }
             }
             roomsParent.localScale = new Vector3(scaleMulty, scaleMulty, scaleMulty);
+            
+            OnGenerationComplete?.Invoke(this, EventArgs.Empty);
         }
 
         //Find the closest room and generate a spawn point

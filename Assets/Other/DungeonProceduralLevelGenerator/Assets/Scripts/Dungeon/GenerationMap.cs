@@ -8,18 +8,17 @@ namespace ProceduralLevelGenerator
         public static int[,] myArr;
         
         public static int maxRoom;
-        [Header("maximum branching level")]
-        public int maxRoomInspector;
+        public int maxRoomBranching;
 
         public static int maxLength;
         private string str;
         private int randomDoor, randomRoom;
-
-        [HideInInspector] public NetworkVariable<string> finalMatrix = new NetworkVariable<string>();
+        
+        public string finalMatrix;
 
         public void GenerationMatrix()
         {      
-            maxRoom = maxRoomInspector ;
+            maxRoom = maxRoomBranching ;
 
             // the maximum length of the array is built from the maximum number of possible rooms
             // the value of the maximum rooms is multiplied by the dimension of the room and multiplied by two sides and summed up with the dimension of the starting room
@@ -42,8 +41,8 @@ namespace ProceduralLevelGenerator
                 str = str + "\n";
             }
 
-            Debug.Log(str); //debug matrix
-            finalMatrix.Value = str;
+            Debug.Log(str);
+            finalMatrix = str;
         }
 
         public void One(int xNew, int yNew, int xOld, int yOld, int door, int room)
@@ -116,7 +115,7 @@ namespace ProceduralLevelGenerator
 
             // the more we have the maximum number of rooms, the greater the chance of a new room appearing
             // if we have reached the maximum number of rooms, then we do not start the distribution of rooms further
-            randomRoom = maxRoomInspector;
+            randomRoom = maxRoomBranching;
             if (room < randomRoom)
             {
                 // if the building algorithm goes down then

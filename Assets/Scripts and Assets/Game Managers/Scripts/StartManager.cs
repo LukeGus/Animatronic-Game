@@ -5,9 +5,11 @@ using UnityEngine;
 using System.Linq;
 using TMPro;
 using Random = UnityEngine.Random;
+using UnityEngine.Events;
 
-public class SpawnManager : NetworkBehaviour
+public class StartManager : NetworkBehaviour
 {
+    [Header("Animatronic Game Objects")]
     public GameObject animatronic1;
     public GameObject animatronic2;
     public GameObject animatronic3;
@@ -15,6 +17,7 @@ public class SpawnManager : NetworkBehaviour
     public GameObject animatronic5;
     public GameObject guardGameObject;
 
+    [Header("Spawn Points")]
     public Transform spawnPoint1;
     public Transform spawnPoint2;
     public Transform spawnPoint3;
@@ -22,9 +25,12 @@ public class SpawnManager : NetworkBehaviour
     public Transform spawnPoint5;
     public Transform guardSpawnPoint;
     
+    [Header("UI")]
     public TMP_Text playerSelectionText;
     public TMP_Text abilityText;
     public Animator playerSelectionAnimation;
+    
+    public static event EventHandler OnGameStartedEvent;
     
     private List<GameObject> shuffledAnimatronics = new List<GameObject>();
     
@@ -58,6 +64,8 @@ public class SpawnManager : NetworkBehaviour
             AssignAnimatronics();
             AssignGuard();
             
+            OnGameStartedEvent?.Invoke(this, EventArgs.Empty);
+            
             Debug.Log("Game Starting");
         }
     }
@@ -85,8 +93,8 @@ public class SpawnManager : NetworkBehaviour
         
         if (connectedPlayerCount == maxPlayerCount && !startedGame)
         {
-            StartGame();
             startedGame = true;
+            StartGame();
         }
         
         if (playersFullReadyCount == maxPlayerCount && !determinedFinalAssignment)
