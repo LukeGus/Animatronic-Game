@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a6b7e146ec546c08a75188a787c3ca, type: 3}
+  m_Name: jahro-settings
+  m_EditorClassIdentifier: 
+  JahroEnabled: 1
+  ShowLaunchButton: 0
+  UseLaunchKeyboardShortcut: 1
+  UseLaunchTapArea: 1
+  ActiveAssemblies:
+  - UnityEngine.TestRunner
+  - UnityEngine.UI
+  - com.unity.multiplayer-hlapi.Runtime
+  - Unity.Timeline
+  - Unity.JahroConsole
+  - UnityEngine.Advertisements
+  - Unity.Analytics.DataPrivacy
+  - UnityEngine.Monetization
+  - UnityEngine.XR.LegacyInputHelpers
+  - UnityEngine.SpatialTracking
+  - Assembly-CSharp
+  - Tests
+  - UnityEngine.Purchasing.WinRTCore
+  - UnityEngine.Purchasing.Stores
+  - UnityEngine.Purchasing.SecurityCore
+  - UnityEngine.Purchasing
+  - UnityEngine.Purchasing.AppleCore
+  - UnityEngine.Purchasing.Security
+  - Purchasing.Common
+  - UnityEngine.Purchasing.Codeless
+  - UnityEngine.Purchasing.WinRTStub
+  - UnityEngine.Purchasing.AppleStub
+  - UnityEngine.Purchasing.AppleMacosStub
