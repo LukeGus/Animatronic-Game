@@ -14,7 +14,7 @@ public class Relay : MonoBehaviour
 {
     public static Relay Instance { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
         Instance = this;
     }
