@@ -13,6 +13,46 @@ public class DungeonGenerationManager : NetworkBehaviour
     
     void Start()
     {
+        dungeonGenerator = GetComponent<DungeonGeneratorGrid2D>();
+        
+        StartGenerationProcess();
+    }
+
+    public void StartGenerationProcess()
+    {
+        if (IsServer)
+        {
+            GenerateDungeonServer();
+        }
+    }
+    
+    public void GenerateDungeonServer()
+    {
+        int seed = Random.Range(0, 10000);
+
+        GenerateDungeonForClientsClientRpc(seed);
+        
+        dungeonGenerator.UseRandomSeed = false;
+        dungeonGenerator.RandomGeneratorSeed = seed;
+        dungeonGenerator.Generate();
+        
+        AssignTileMapCollidables();
+    }
+    
+    [ClientRpc]
+    public void GenerateDungeonForClientsClientRpc(int seed)
+    {
+        if (IsHost) return;
+        
+        dungeonGenerator.UseRandomSeed = false;
+        dungeonGenerator.RandomGeneratorSeed = seed;
+        dungeonGenerator.Generate();
+        
+        AssignTileMapCollidables();
+    }
+    
+    public void AssignTileMapCollidables()
+    {
         // Find the child GameObject named "Tilemaps"
         Transform tilemaps = transform.Find("Tilemaps");
 
@@ -45,38 +85,5 @@ public class DungeonGenerationManager : NetworkBehaviour
         {
             Debug.LogError("Could not find Tilemaps GameObject.");
         }
-        
-        dungeonGenerator = GetComponent<DungeonGeneratorGrid2D>();
-        
-        StartGenerationProcess();
-    }
-
-    public void StartGenerationProcess()
-    {
-        if (IsServer)
-        {
-            GenerateDungeonServer();
-        }
-    }
-    
-    public void GenerateDungeonServer()
-    {
-        int seed = Random.Range(0, 10000);
-
-        GenerateDungeonForClientsClientRpc(seed);
-        
-        dungeonGenerator.UseRandomSeed = false;
-        dungeonGenerator.RandomGeneratorSeed = seed;
-        dungeonGenerator.Generate();
-    }
-    
-    [ClientRpc]
-    public void GenerateDungeonForClientsClientRpc(int seed)
-    {
-        if (IsHost) return;
-        
-        dungeonGenerator.UseRandomSeed = false;
-        dungeonGenerator.RandomGeneratorSeed = seed;
-        dungeonGenerator.Generate();
     }
 }

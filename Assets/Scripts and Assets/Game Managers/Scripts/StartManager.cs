@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
+using JahroConsole;
 
 public class StartManager : NetworkBehaviour
 {
@@ -29,6 +30,7 @@ public class StartManager : NetworkBehaviour
     public TMP_Text playerSelectionText;
     public TMP_Text abilityText;
     public Animator playerSelectionAnimation;
+    public Camera uiCamera;
     
     public static event EventHandler OnGameStartedEvent;
     
@@ -48,12 +50,16 @@ public class StartManager : NetworkBehaviour
     
     void Start()
     {
+        playerSelectionAnimation.SetTrigger("ShowSelection");
+        
         PlayerConnectedServerRpc();
         
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
         
         maxPlayerCount = ReadyManager.Instance.playerReadyCount.Value;
         ReadyManager.Instance.DestroyObject();
+        
+        uiCamera.gameObject.SetActive(true);
     }
 
     public void StartGame()
@@ -240,10 +246,22 @@ public class StartManager : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void RecieveReadyServerRpc()
     {
         playersFullReadyCount++;
+    }
+    
+    [JahroCommand("Test")]
+    public void Test()
+    {
+        Debug.Log("You are the guard");
+        guardGameObject.SetActive(true);
+        playerSelectionText.text = "Guard";
+        abilityText.text =
+            "The guard is able to place traps, close doors, and view monitors to be able to play strategically to survive the night.";
+
+        playerSelectionAnimation.SetTrigger("ContinueSelection");
     }
     
     [ClientRpc]
@@ -256,6 +274,8 @@ public class StartManager : NetworkBehaviour
             playerSelectionText.text = "Guard";
             abilityText.text = "The guard is able to place traps, close doors, and view monitors to be able to play strategically to survive the night.";
 
+            playerSelectionAnimation.SetTrigger("ContinueSelection");
+
             InstantiateGuardGameObjectServerRpc();
         }
         else
@@ -264,6 +284,8 @@ public class StartManager : NetworkBehaviour
             GetAnimatronicGameObject(assignedAnimatronicIndex).SetActive(true);
             playerSelectionText.text = "Animatronic " + (assignedAnimatronicIndex + 1);
             abilityText.text = GetAnimatronicAbilitiesGameObject(assignedAnimatronicIndex);
+
+            playerSelectionAnimation.SetTrigger("ContinueSelection");
 
             switch (assignedAnimatronicIndex)
             {
@@ -284,49 +306,53 @@ public class StartManager : NetworkBehaviour
                     break;
             }
         }
-
-        playerSelectionAnimation.SetTrigger("ShowSelection");
     }
-    
-    [ServerRpc]
+
+    [ServerRpc(RequireOwnership = false)]
     public void InstantiateAnimatronic1GameObjectServerRpc(ServerRpcParams serverRpcParams = default)
     {
         GameObject animatronic = Instantiate(animatronic1, spawnPoint1, spawnPoint1);
         animatronic.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        uiCamera.gameObject.SetActive(false);
     }
     
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void InstantiateAnimatronic2GameObjectServerRpc(ServerRpcParams serverRpcParams = default)
     {
         GameObject animatronic = Instantiate(animatronic2, spawnPoint2, spawnPoint2);
         animatronic.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        uiCamera.gameObject.SetActive(false);
     }
     
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void InstantiateAnimatronic3GameObjectServerRpc(ServerRpcParams serverRpcParams = default)
     {
         GameObject animatronic = Instantiate(animatronic3, spawnPoint3, spawnPoint3);
         animatronic.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        uiCamera.gameObject.SetActive(false);
     }
-    
-    [ServerRpc]
+
+    [ServerRpc(RequireOwnership = false)]
     public void InstantiateAnimatronic4GameObjectServerRpc(ServerRpcParams serverRpcParams = default)
     {
         GameObject animatronic = Instantiate(animatronic4, spawnPoint4, spawnPoint4);
         animatronic.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        uiCamera.gameObject.SetActive(false);
     }
-    
-    [ServerRpc]
+
+    [ServerRpc(RequireOwnership = false)]
     public void InstantiateAnimatronic5GameObjectServerRpc(ServerRpcParams serverRpcParams = default)
     {
         GameObject animatronic = Instantiate(animatronic5, spawnPoint5, spawnPoint5);
         animatronic.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        uiCamera.gameObject.SetActive(false);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void InstantiateGuardGameObjectServerRpc(ServerRpcParams serverRpcParams = default)
     {
         GameObject guard = Instantiate(guardGameObject, guardSpawnPoint, guardSpawnPoint);
         guard.GetComponent<NetworkObject>().SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        uiCamera.gameObject.SetActive(false);
     }
 }
