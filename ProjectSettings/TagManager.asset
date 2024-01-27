@@ -7,6 +7,7 @@ TagManager:
   - Ledge
   - Enemy
   - Bullet
+  - Room
   layers:
   - Default
   - TransparentFX
@@ -16,12 +17,12 @@ TagManager:
   - UI
   - Obstacles
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Guard
+  - Animatronic 1
+  - Animatronic 2
+  - Animatronic 3
+  - Animatronic 4
+  - Animatronic 5
   - 
   - 
   - 

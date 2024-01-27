@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 144595356661626318}
   - component: {fileID: 601094291286996102}
   - component: {fileID: 3676797371699960529}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1222736933064001796}
   - component: {fileID: 6997971450932523728}
   - component: {fileID: 7009529730987876579}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 4553313934814612663}
   - component: {fileID: 7545265282961366495}
   - component: {fileID: 7314900537450890491}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 8132534873711585487}
   - component: {fileID: 4856016473543827423}
   - component: {fileID: 3838638116501162800}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: VHS Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 8343040546488086803}
   - component: {fileID: 8507588327943454934}
   - component: {fileID: 7374068517608133391}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8010656994411207108}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Path Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 5979504311941058800}
   - component: {fileID: 8034103579967712577}
   - component: {fileID: 4423278339577109818}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 1356977283413463699}
   - component: {fileID: 7040933696884987923}
   - component: {fileID: 7429255913033232416}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +840,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -950,7 +950,7 @@ GameObject:
   - component: {fileID: 1588374757200204821}
   - component: {fileID: 4306902657318799378}
   - component: {fileID: 1529650922810960614}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1050,7 +1050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3021524781365328704}
   - component: {fileID: 4551629315164045728}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1101,7 +1101,7 @@ GameObject:
   - component: {fileID: 529877144450703695}
   - component: {fileID: 5114100078333732066}
   - component: {fileID: 2408093098359161297}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1185,13 +1185,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2582920477934229220}
   - component: {fileID: 436811415438779879}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Animatronic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2582920477934229220
 Transform:
   m_ObjectHideFlags: 0
@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 126903384114477808}
   - component: {fileID: 7005650424467125212}
   - component: {fileID: 2123189990229510376}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
