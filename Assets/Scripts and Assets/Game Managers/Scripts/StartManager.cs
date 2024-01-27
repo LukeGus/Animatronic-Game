@@ -252,21 +252,11 @@ public class StartManager : NetworkBehaviour
         playersFullReadyCount++;
     }
     
-    [JahroCommand("Test")]
-    public void Test()
-    {
-        Debug.Log("You are the guard");
-        guardGameObject.SetActive(true);
-        playerSelectionText.text = "Guard";
-        abilityText.text =
-            "The guard is able to place traps, close doors, and view monitors to be able to play strategically to survive the night.";
-
-        playerSelectionAnimation.SetTrigger("ContinueSelection");
-    }
-    
     [ClientRpc]
     public void DetermineFinalAssignmentClientRpc()
     {
+        Debug.Log("Determining Final Assignment");
+        
         if(isGuard)
         {
             Debug.Log("You are the guard");
