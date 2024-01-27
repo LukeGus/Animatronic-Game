@@ -17,7 +17,7 @@ public class ClickMovement : MonoBehaviour
     
     private IEnumerator FullScan()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(11);
         AstarPath.active.Scan();
     }
 
