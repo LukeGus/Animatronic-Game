@@ -14,13 +14,10 @@ public class Relay : MonoBehaviour
 {
     public static Relay Instance { get; private set; }
 
-    private void Start()
-    {
-        Instance = this;
-    }
-
     private async void Start()
     {
+        Instance = this;
+        
         await UnityServices.InitializeAsync();
 
         AuthenticationService.Instance.SignedIn += () => {
