@@ -62,7 +62,7 @@ public class StartManager : NetworkBehaviour
         
         uiCamera.gameObject.SetActive(true);
         
-        if (IsServer)
+        if (IsHost)
         {
             gameObject.GetComponent<NetworkObject>().Spawn();
         }
