@@ -10,7 +10,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using Unity.Networking.Transport.Relay;
 
-public class Relay : MonoBehaviour
+public class Relay : NetworkBehaviour
 {
     public static Relay Instance { get; private set; }
 
@@ -87,7 +87,7 @@ public class Relay : MonoBehaviour
     
     private async Task WaitUntilIsClient()
     {
-        while (!IsClient())
+        while (!IsClient)
         {
             await Task.Yield();
         }
