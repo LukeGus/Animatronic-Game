@@ -70,9 +70,11 @@ public class StartManager : NetworkBehaviour
     
     private IEnumerator readyPlayer()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(5f);
         
         PlayerConnectedServerRpc();
+        
+        Debug.Log("Sent Ready");
     }
 
     public void StartGame()

@@ -151,8 +151,6 @@ public class LobbyManager : NetworkBehaviour {
                     // Start Game!
                     if (!IsLobbyHost())
                     {
-                        //await Task.Delay(3000);
-                        
                         if (joinedLobby != null && !NetworkManager.Singleton.IsClient)
                             Relay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
@@ -405,8 +403,6 @@ public class LobbyManager : NetworkBehaviour {
                 await WaitUntilCanStartGame();
                 
                 Debug.Log("Starting Game Soon");
-                
-                await Task.Delay(4000);
 
                 if (!NetworkObject.IsSpawned)
                     NetworkObject.Spawn();
