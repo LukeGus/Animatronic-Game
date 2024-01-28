@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
+using JahroConsole;
 
 public class LobbyManager : NetworkBehaviour {
 
@@ -421,6 +422,7 @@ public class LobbyManager : NetworkBehaviour {
         }
     }
     
+    [JahroConsoleCommand("LobbyForceReady")]
     [ServerRpc(RequireOwnership = false)]
     public void ReadyPlayerServerRpc(ServerRpcParams rpcParams = default)
     {
@@ -440,6 +442,7 @@ public class LobbyManager : NetworkBehaviour {
         }
     }
     
+    [JahroConsoleCommand("LobbyForceStart")]
     [ClientRpc]
     public void StartGameClientRpc(ClientRpcParams clientRpcParams = default)
     {

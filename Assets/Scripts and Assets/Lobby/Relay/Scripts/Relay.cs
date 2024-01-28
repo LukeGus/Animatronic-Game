@@ -74,6 +74,8 @@ public class Relay : MonoBehaviour
                 NetworkManager.Singleton.StartClient();
             
             LobbyManager.Instance.ReadyPlayerServerRpc();
+            
+            Debug.Log("Joined relay with " + joinCode);
         }
         catch (RelayServiceException e)
         {
