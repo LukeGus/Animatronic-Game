@@ -409,8 +409,6 @@ public class LobbyManager : NetworkBehaviour {
 
                 if (!NetworkObject.IsSpawned)
                     NetworkObject.Spawn();
-
-                ShowStartingTextClientRpc();
                 
                 StartGameClientRpc();
                 
@@ -456,18 +454,6 @@ public class LobbyManager : NetworkBehaviour {
         {
             await Task.Yield();
         }
-    }
-    
-    [ClientRpc]
-    public void ShowStartingTextClientRpc(ClientRpcParams clientRpcParams = default)
-    {
-        //startingText.SetActive(true);
-    }
-
-    [ClientRpc]
-    public void HideStartingTextClientRpc(ClientRpcParams clientRpcParams = default)
-    {
-        startingText.SetActive(false);
     }
 
     private void OnJoinedLobbyHandler(object sender, LobbyEventArgs e)
