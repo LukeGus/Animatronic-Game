@@ -34,14 +34,14 @@ public class Relay : MonoBehaviour
         try
         {
             // The number at the end of this line signifies the max amount of players allowed in a relay.
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(4);
 
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
             Debug.Log(joinCode);
 
             // You can use "dlts" or "udp" or "wss"
-            RelayServerData relayServerData = new RelayServerData(allocation, "udp");
+            RelayServerData relayServerData = new RelayServerData(allocation, "dlts");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
@@ -66,7 +66,7 @@ public class Relay : MonoBehaviour
             Debug.Log("Joining relay with " + joinCode);
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            RelayServerData relayServerData = new RelayServerData(joinAllocation, "udp");
+            RelayServerData relayServerData = new RelayServerData(joinAllocation, "dlts");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
