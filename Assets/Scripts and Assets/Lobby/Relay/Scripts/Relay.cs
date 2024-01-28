@@ -73,6 +73,8 @@ public class Relay : MonoBehaviour
             if (!NetworkManager.Singleton.IsClient)
                 NetworkManager.Singleton.StartClient();
             
+            Task.Delay(3000).Wait();
+            
             LobbyManager.Instance.ReadyPlayerServerRpc();
             
             Debug.Log("Joined relay with " + joinCode);
