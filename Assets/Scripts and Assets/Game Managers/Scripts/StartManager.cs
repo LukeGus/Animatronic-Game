@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -52,7 +53,7 @@ public class StartManager : NetworkBehaviour
     {
         playerSelectionAnimation.SetTrigger("ShowSelection");
         
-        PlayerConnectedServerRpc();
+        StartCoroutine(readyPlayer());
         
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
         
@@ -60,6 +61,18 @@ public class StartManager : NetworkBehaviour
         ReadyManager.Instance.DestroyObject();
         
         uiCamera.gameObject.SetActive(true);
+        
+        if (IsServer)
+        {
+            this.NetworkObject.Spawn();
+        }
+    }
+    
+    private IEnumerator readyPlayer()
+    {
+        yield return new WaitForSeconds(3.5f);
+        
+        PlayerConnectedServerRpc();
     }
 
     public void StartGame()
