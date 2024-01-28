@@ -73,7 +73,7 @@ public class Relay : MonoBehaviour
             if (!NetworkManager.Singleton.IsClient)
                 NetworkManager.Singleton.StartClient();
             
-            Task.Delay(10000).Wait();
+            await WaitUntilIsClient();
             
             LobbyManager.Instance.ReadyPlayerServerRpc();
             
@@ -82,6 +82,14 @@ public class Relay : MonoBehaviour
         catch (RelayServiceException e)
         {
             Debug.Log(e);
+        }
+    }
+    
+    private async Task WaitUntilIsClient()
+    {
+        while (!IsClient())
+        {
+            await Task.Yield();
         }
     }
 }
