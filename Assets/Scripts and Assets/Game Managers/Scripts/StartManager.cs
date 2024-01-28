@@ -53,7 +53,7 @@ public class StartManager : NetworkBehaviour
     {
         playerSelectionAnimation.SetTrigger("ShowSelection");
         
-        StartCoroutine(readyPlayer());
+        Invoke("ReadyPlayer", 7f);
         
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallBack;
         
@@ -68,10 +68,8 @@ public class StartManager : NetworkBehaviour
         }
     }
     
-    private IEnumerator readyPlayer()
+    private void ReadyPlayer()
     {
-        yield return new WaitForSeconds(5f);
-        
         PlayerConnectedServerRpc();
         
         Debug.Log("Sent Ready");
