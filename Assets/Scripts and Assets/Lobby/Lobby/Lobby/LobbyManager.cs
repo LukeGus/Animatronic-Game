@@ -150,9 +150,9 @@ public class LobbyManager : NetworkBehaviour {
                     // Start Game!
                     if (!IsLobbyHost())
                     {
-                        await Task.Delay(10000);
+                        await Task.Delay(3000);
                         
-                        if (joinedLobby != null)
+                        if (joinedLobby != null && !NetworkManager.Singleton.IsClient)
                             Relay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
 
