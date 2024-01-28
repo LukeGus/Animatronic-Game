@@ -64,7 +64,7 @@ public class StartManager : NetworkBehaviour
         
         if (IsServer)
         {
-            this.NetworkObject.Spawn();
+            gameObject.GetComponent<NetworkObject>().Spawn();
         }
     }
     
