@@ -49,8 +49,10 @@ public class StartManager : NetworkBehaviour
     private bool startedGame = false;
     private bool determinedFinalAssignment = false;
     
-    void Start()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+        
         playerSelectionAnimation.SetTrigger("ShowSelection");
         
         Invoke("ReadyPlayer", 7f);
