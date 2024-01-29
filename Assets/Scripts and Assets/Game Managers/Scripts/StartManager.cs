@@ -62,9 +62,10 @@ public class StartManager : NetworkBehaviour
         
         uiCamera.gameObject.SetActive(true);
         
-        if(IsHost)
+        if(IsServer)
         {
             this.GetComponent<NetworkObject>().Spawn();
+            Debug.Log("Spawned Start Manager");
         }
     }
     
@@ -107,6 +108,8 @@ public class StartManager : NetworkBehaviour
 
     void Update()
     {
+        Debug.Log(IsServer);
+        
         if(!IsServer)
             return;
         
