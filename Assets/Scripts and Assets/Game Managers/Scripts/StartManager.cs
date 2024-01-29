@@ -62,11 +62,7 @@ public class StartManager : NetworkBehaviour
         
         uiCamera.gameObject.SetActive(true);
         
-        if(IsServer)
-        {
-            this.GetComponent<NetworkObject>().Spawn();
-            Debug.Log("Spawned Start Manager");
-        }
+        this.GetComponent<NetworkObject>().Spawn();
     }
     
     private void ReadyPlayer()
@@ -108,8 +104,6 @@ public class StartManager : NetworkBehaviour
 
     void Update()
     {
-        Debug.Log(IsServer);
-        
         if(!IsServer)
             return;
         
