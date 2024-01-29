@@ -1185,7 +1185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2582920477934229220}
   - component: {fileID: 436811415438779879}
-  - component: {fileID: 6081764817043083225}
+  - component: {fileID: 7454823070538458974}
   m_Layer: 9
   m_Name: Animatronic
   m_TagString: Untagged
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   energyIncreaseRate: 15
   currentEnergy: 0
   energyText: {fileID: 3676797371699960529}
---- !u!114 &6081764817043083225
+--- !u!114 &7454823070538458974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1238,7 +1238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8323468442859457215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 951099334
