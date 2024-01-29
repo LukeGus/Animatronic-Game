@@ -418,7 +418,6 @@ public class LobbyManager : NetworkBehaviour {
         }
     }
     
-    [JahroCommand("LobbyForceReady")]
     [ServerRpc(RequireOwnership = false)]
     public void ReadyPlayerServerRpc(ServerRpcParams rpcParams = default)
     {
@@ -438,7 +437,6 @@ public class LobbyManager : NetworkBehaviour {
         }
     }
     
-    [JahroCommand("LobbyForceStart")]
     [ClientRpc]
     public void StartGameClientRpc(ClientRpcParams clientRpcParams = default)
     {
