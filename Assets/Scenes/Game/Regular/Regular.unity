@@ -395,12 +395,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99071286}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 288360111}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &99071288
 MonoBehaviour:
@@ -763,12 +763,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176625797}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 288360111}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &176625799
 MonoBehaviour:
@@ -782,40 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4430600b6159f4a8bd69a55e7fd797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &288360110
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 288360111}
-  m_Layer: 0
-  m_Name: Game Managers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &288360111
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288360110}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 176625798}
-  - {fileID: 99071287}
-  - {fileID: 1346339050}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355772907
 GameObject:
   m_ObjectHideFlags: 1
@@ -2497,7 +2463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493127747}
   - component: {fileID: 493127748}
-  - component: {fileID: 493127750}
+  - component: {fileID: 493127749}
   m_Layer: 0
   m_Name: Start Manager
   m_TagString: Untagged
@@ -2548,7 +2514,7 @@ MonoBehaviour:
   abilityText: {fileID: 1694627458}
   playerSelectionAnimation: {fileID: 2035814694}
   uiCamera: {fileID: 72107068}
---- !u!114 &493127750
+--- !u!114 &493127749
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2560,7 +2526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1893118135
+  GlobalObjectIdHash: 1190003390
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -6392,7 +6358,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2029519823}
-  m_Father: {fileID: 288360111}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1506962047
 GameObject:
@@ -7407,16 +7373,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6227277270063864262, guid: 1b78ecdd11a89c14aad3e19a39009853, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6326824513411721015, guid: 1b78ecdd11a89c14aad3e19a39009853, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2009454237}
   m_SourcePrefab: {fileID: 100100000, guid: 1b78ecdd11a89c14aad3e19a39009853, type: 3}
 --- !u!1 &2009454236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6326824513411721015, guid: 1b78ecdd11a89c14aad3e19a39009853, type: 3}
   m_PrefabInstance: {fileID: 2009454235}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2009454237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009454236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3490607817
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &2014340647
 GameObject:
   m_ObjectHideFlags: 1
@@ -7610,16 +7600,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Animatronic
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6081764817043083225, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044384172}
   m_SourcePrefab: {fileID: 100100000, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
 --- !u!1 &2044384171 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
   m_PrefabInstance: {fileID: 2044384170}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2044384172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044384171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 934129992
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &2059349531
 GameObject:
   m_ObjectHideFlags: 1
@@ -7700,8 +7714,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 493127747}
+  - {fileID: 176625798}
+  - {fileID: 99071287}
+  - {fileID: 1346339050}
   - {fileID: 1278565462}
-  - {fileID: 288360111}
   - {fileID: 168808237}
   - {fileID: 1293158578}
   - {fileID: 2009454235}
