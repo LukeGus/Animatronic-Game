@@ -2498,12 +2498,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2efaca2d89a24d4791e02db96bfce43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatronic1: {fileID: 0}
-  animatronic2: {fileID: 0}
-  animatronic3: {fileID: 0}
-  animatronic4: {fileID: 0}
-  animatronic5: {fileID: 0}
-  guardGameObject: {fileID: 0}
+  animatronic1: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
+  animatronic2: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
+  animatronic3: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
+  animatronic4: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
+  animatronic5: {fileID: 8323468442859457215, guid: f617441faf4bb434d93fb584718d3c4c, type: 3}
+  guardGameObject: {fileID: 6326824513411721015, guid: 1b78ecdd11a89c14aad3e19a39009853, type: 3}
   spawnPoint1: {fileID: 2134882520}
   spawnPoint2: {fileID: 466320179}
   spawnPoint3: {fileID: 962500871}

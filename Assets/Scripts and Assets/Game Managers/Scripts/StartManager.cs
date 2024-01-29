@@ -61,6 +61,11 @@ public class StartManager : NetworkBehaviour
         ReadyManager.Instance.DestroyObject();
         
         uiCamera.gameObject.SetActive(true);
+        
+        if(IsHost)
+        {
+            this.GetComponent<NetworkObject>().Spawn();
+        }
     }
     
     private void ReadyPlayer()
