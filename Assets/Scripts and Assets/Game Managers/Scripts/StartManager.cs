@@ -8,6 +8,7 @@ using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
 using JahroConsole;
+using UnityEngine.SceneManagement;
 
 public class StartManager : NetworkBehaviour
 {
@@ -109,13 +110,13 @@ public class StartManager : NetworkBehaviour
         if(!IsServer)
             return;
         
-        if (connectedPlayerCount == maxPlayerCount && !startedGame)
+        if (connectedPlayerCount == maxPlayerCount && !startedGame  && playersFullReadyCount > 0)
         {
             startedGame = true;
             StartGame();
         }
         
-        if (playersFullReadyCount == maxPlayerCount && !determinedFinalAssignment)
+        if (playersFullReadyCount == maxPlayerCount && !determinedFinalAssignment && playersFullReadyCount > 0)
         {
             Debug.Log("Determining Final Assignment");
             DetermineFinalAssignmentClientRpc();
