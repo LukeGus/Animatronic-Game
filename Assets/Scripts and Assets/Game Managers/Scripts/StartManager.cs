@@ -49,19 +49,11 @@ public class StartManager : NetworkBehaviour
     private bool startedGame = false;
     private bool determinedFinalAssignment = false;
     
-    public void Start()
-    {
-         Invoke("SpawnNetworkObject", 3f);
-    }
-    
-    public void SpawnNetworkObject()
-    {
-        this.GetComponent<NetworkObject>().Spawn();
-    }
-    
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+        
+        Debug.Log("Network Object Spawned");
         
         playerSelectionAnimation.SetTrigger("ShowSelection");
         
