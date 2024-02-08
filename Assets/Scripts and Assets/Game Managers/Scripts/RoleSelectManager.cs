@@ -269,11 +269,13 @@ public class RoleSelectManager : NetworkBehaviour
             playerSelectionAnimation.SetTrigger("ContinueSelection");
         }
         
-        StartCoroutine(loadSceneAfterTime());
+        StartCoroutine(LoadSceneAfterTime());
     }
     
-    public IEnumerator loadSceneAfterTime()
+    public IEnumerator LoadSceneAfterTime()
     {
+        yield return new WaitForSeconds(15);
+        
         if(NetworkManager.Singleton.IsServer)
         {
             string gameMode = LobbyManager.Instance.finalGameMode;
