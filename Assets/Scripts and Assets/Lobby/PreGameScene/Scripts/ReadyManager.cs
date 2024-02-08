@@ -121,21 +121,7 @@ public class ReadyManager : NetworkBehaviour
         Debug.Log("Starting Game");
         
         RoleSelectManager.Instance.StartSelectionProcess();
-        
-        //string gameMode = LobbyManager.Instance.finalGameMode;
-        
-        //LoadGameClientRpc(gameMode);
     }
-    
-    /*
-    
-    [ClientRpc]
-    public void LoadGameClientRpc(string gameMode)
-    {
-        lsmManager.LoadScene(gameMode);
-    }
-    
-    */
 
     private void Update()
     {

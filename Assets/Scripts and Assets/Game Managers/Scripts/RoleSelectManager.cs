@@ -56,6 +56,8 @@ public class RoleSelectManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+        
+        DontDestroyOnLoad(gameObject);
     }
     
     public void StartSelectionProcess()
@@ -252,8 +254,6 @@ public class RoleSelectManager : NetworkBehaviour
             abilityText.text = "The guard is able to place traps, close doors, and view monitors to be able to play strategically to survive the night.";
 
             playerSelectionAnimation.SetTrigger("ContinueSelection");
-
-            //InstantiateGuardGameObjectServerRpc();
         }
         else
         {
@@ -263,9 +263,41 @@ public class RoleSelectManager : NetworkBehaviour
             abilityText.text = GetAnimatronicAbilitiesGameObject(assignedAnimatronicIndex);
 
             playerSelectionAnimation.SetTrigger("ContinueSelection");
-
-            /*
+        }
+        
+        if(NetworkManager.Singleton.IsServer)
+        {
+            string gameMode = LobbyManager.Instance.finalGameMode;
+                    
+            LoadGameClientRpc(gameMode);
             
+            StartCoroutine(SpawnWhenLoaded());
+        }
+    }
+    
+    [ClientRpc]
+    public void LoadGameClientRpc(string gameMode)
+    {
+        lsmManager.LoadScene(gameMode);
+    }
+    
+    public IEnumerator SpawnWhenLoaded()
+    {
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "Regular");
+        
+        SetTransformToSpawnpoint("Animatronic 1", spawnPoint1);
+        SetTransformToSpawnpoint("Animatronic 2", spawnPoint2);
+        SetTransformToSpawnpoint("Animatronic 3", spawnPoint3);
+        SetTransformToSpawnpoint("Animatronic 4", spawnPoint4);
+        SetTransformToSpawnpoint("Animatronic 5", spawnPoint5);
+        SetTransformToSpawnpoint("Guard", guardSpawnPoint);
+        
+        if (isGuard)
+        {
+            InstantiateGuardGameObjectServerRpc();
+        }
+        else
+        {
             switch (assignedAnimatronicIndex)
             {
                 case 0:
@@ -284,9 +316,23 @@ public class RoleSelectManager : NetworkBehaviour
                     InstantiateAnimatronic5GameObjectServerRpc();
                     break;
             }
-            
-            */
         }
+    }
+    
+    private void SetTransformToSpawnpoint(string spawnpointName, Transform targetTransform)
+    {
+        GameObject spawnpointObject = GameObject.Find(spawnpointName);
+
+        if (spawnpointObject == null)
+        {
+            Debug.LogError("Object '" + spawnpointName + "' not found in the scene!");
+            return;
+        }
+
+        // Set the transform to the found spawnpoint object
+        spawnpointObject.transform.position = targetTransform.position;
+        spawnpointObject.transform.rotation = targetTransform.rotation;
+        spawnpointObject.transform.localScale = targetTransform.localScale;
     }
 
     [ServerRpc(RequireOwnership = false)]
