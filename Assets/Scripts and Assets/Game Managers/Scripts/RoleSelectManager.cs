@@ -61,6 +61,8 @@ public class RoleSelectManager : NetworkBehaviour
     public void StartSelectionProcess()
     {
         ShowSelectionClientRpc();
+        
+        StartGame();
     }
     
     [ClientRpc]
