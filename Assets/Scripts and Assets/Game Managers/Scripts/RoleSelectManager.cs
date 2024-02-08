@@ -332,17 +332,26 @@ public class RoleSelectManager : NetworkBehaviour
     
     private void SetTransformToSpawnpoint(string spawnpointName, Transform targetTransform)
     {
-        GameObject spawnpointObject = GameObject.Find(spawnpointName);
+        Transform spawnpointsParent = GameObject.Find("Spawnpoints").transform;
 
-        if (spawnpointObject == null)
+        if (spawnpointsParent == null)
         {
-            Debug.LogError("Object '" + spawnpointName + "' not found in the scene!");
+            Debug.LogError("Object 'Spawnpoints' not found in the scene!");
             return;
         }
 
-        spawnpointObject.transform.position = targetTransform.position;
-        spawnpointObject.transform.rotation = targetTransform.rotation;
-        spawnpointObject.transform.localScale = targetTransform.localScale;
+        Transform spawnpointTransform = spawnpointsParent.Find(spawnpointName);
+
+        if (spawnpointTransform == null)
+        {
+            Debug.LogError("Object '" + spawnpointName + "' not found under 'Spawnpoints'!");
+            return;
+        }
+
+        // Set the transform to the found spawnpoint object
+        spawnpointTransform.position = targetTransform.position;
+        spawnpointTransform.rotation = targetTransform.rotation;
+        spawnpointTransform.localScale = targetTransform.localScale;
     }
 
     [ServerRpc(RequireOwnership = false)]

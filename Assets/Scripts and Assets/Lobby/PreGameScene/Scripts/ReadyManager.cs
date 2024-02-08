@@ -53,11 +53,6 @@ public class ReadyManager : NetworkBehaviour
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
     }
-    
-    public void DestroyObject()
-    {
-        Destroy(gameObject);
-    }
 
     public IEnumerator SetUpGame()
     {
