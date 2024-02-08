@@ -60,6 +60,12 @@ public class RoleSelectManager : NetworkBehaviour
     
     public void StartSelectionProcess()
     {
+        ShowSelectionClientRpc();
+    }
+    
+    [ClientRpc]
+    public void ShowSelectionClientRpc()
+    {
         playerSelectionAnimation.SetTrigger("ShowSelection");
     }
 
