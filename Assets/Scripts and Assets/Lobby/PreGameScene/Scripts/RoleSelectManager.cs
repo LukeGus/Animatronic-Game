@@ -14,7 +14,7 @@ public class ReadyManager : NetworkBehaviour
     public static ReadyManager Instance { get; private set; }
     
     public NetworkVariable<int> playerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
-    private NetworkVariable<int> maxPlayerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
+    public NetworkVariable<int> maxPlayerReadyCount = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone);
     
     private NetworkVariable<float> mainTimer = new NetworkVariable<float>(
             value: 60f,
@@ -55,8 +55,6 @@ public class ReadyManager : NetworkBehaviour
 
         readyButton.onClick.AddListener(Vote);
         leaveLobbyButton.onClick.AddListener(Leave);
-        
-        DontDestroyOnLoad(gameObject);
     }
     
     public void DestroyObject()
@@ -122,16 +120,22 @@ public class ReadyManager : NetworkBehaviour
         
         Debug.Log("Starting Game");
         
-        string gameMode = LobbyManager.Instance.finalGameMode;
+        RoleSelectManager.Instance.StartSelectionProcess();
         
-        LoadGameClientRpc(gameMode);
+        //string gameMode = LobbyManager.Instance.finalGameMode;
+        
+        //LoadGameClientRpc(gameMode);
     }
+    
+    /*
     
     [ClientRpc]
     public void LoadGameClientRpc(string gameMode)
     {
         lsmManager.LoadScene(gameMode);
     }
+    
+    */
 
     private void Update()
     {

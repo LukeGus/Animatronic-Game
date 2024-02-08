@@ -26,13 +26,13 @@ namespace ProceduralLevelGenerator
         
         public string finalMatrix;
         
-        public StartManager startManager;
+        public RoleSelectManager roleSelectManager;
         
         public event EventHandler OnGenerationComplete;
         
         public void Start()
         {
-            StartManager.OnGameStartedEvent += RunServer;
+            RoleSelectManager.OnGameStartedEvent += RunServer;
         }
         
         void Update()
