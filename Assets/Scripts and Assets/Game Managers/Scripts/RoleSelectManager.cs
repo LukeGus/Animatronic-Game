@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.Events;
 using JahroConsole;
 using UnityEngine.SceneManagement;
+using Michsky.LSS;
 
 public class RoleSelectManager : NetworkBehaviour
 {
@@ -34,6 +35,9 @@ public class RoleSelectManager : NetworkBehaviour
     public TMP_Text selectionText;
     public TMP_Text abilityText;
     public Animator playerSelectionAnimation;
+    
+    [Header("Managers")]
+    [SerializeField] private LSS_Manager lsmManager;
     
     public static event EventHandler OnGameStartedEvent;
     

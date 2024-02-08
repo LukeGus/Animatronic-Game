@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine.UI;
 using Michsky;
 using Michsky.MUIP;
-using Michsky.LSS;
 
 public class ReadyManager : NetworkBehaviour 
 {
@@ -37,8 +36,6 @@ public class ReadyManager : NetworkBehaviour
     
     [SerializeField] private ButtonManager readyButton;
     [SerializeField] private Button leaveLobbyButton;
-    
-    [SerializeField] private LSS_Manager lsmManager;
 
     private void Start()
     {
