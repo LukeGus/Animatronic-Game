@@ -269,13 +269,18 @@ public class RoleSelectManager : NetworkBehaviour
             playerSelectionAnimation.SetTrigger("ContinueSelection");
         }
         
+        StartCoroutine(loadSceneAfterTime());
+    }
+    
+    public IEnumerator loadSceneAfterTime()
+    {
         if(NetworkManager.Singleton.IsServer)
         {
             string gameMode = LobbyManager.Instance.finalGameMode;
-                    
-            LoadGameClientRpc(gameMode);
             
             StartCoroutine(SpawnWhenLoaded());
+                    
+            LoadGameClientRpc(gameMode);
         }
     }
     
@@ -333,7 +338,6 @@ public class RoleSelectManager : NetworkBehaviour
             return;
         }
 
-        // Set the transform to the found spawnpoint object
         spawnpointObject.transform.position = targetTransform.position;
         spawnpointObject.transform.rotation = targetTransform.rotation;
         spawnpointObject.transform.localScale = targetTransform.localScale;
