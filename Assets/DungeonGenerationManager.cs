@@ -53,17 +53,14 @@ public class DungeonGenerationManager : NetworkBehaviour
     
     public void AssignTileMapCollidables()
     {
-        // Find the child GameObject named "Tilemaps"
         Transform tilemaps = transform.Find("Tilemaps");
 
         if (tilemaps != null)
         {
-            // Find the child GameObject named "Walls" within "Tilemaps"
             tilemapWalls = tilemaps.Find("Walls")?.gameObject;
 
             if (tilemapWalls != null)
             {
-                // Find the child GameObject named "Collideable" within "Tilemaps"
                 tilemapCollideable = tilemaps.Find("Collideable")?.gameObject;
 
                 if (tilemapCollideable != null)
