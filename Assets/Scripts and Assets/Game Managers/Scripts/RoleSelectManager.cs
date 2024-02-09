@@ -269,6 +269,8 @@ public class RoleSelectManager : NetworkBehaviour
         }
         
         StartCoroutine(LoadSceneAfterTime());
+        
+        StartCoroutine(SpawnWhenLoaded());
     }
     
     public IEnumerator LoadSceneAfterTime()
@@ -278,8 +280,6 @@ public class RoleSelectManager : NetworkBehaviour
         if(NetworkManager.Singleton.IsServer)
         {
             string gameMode = LobbyManager.Instance.finalGameMode;
-            
-            StartCoroutine(SpawnWhenLoaded());
                     
             LoadGameClientRpc(gameMode);
         }
