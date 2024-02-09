@@ -97,7 +97,6 @@ public class RoleSelectManager : NetworkBehaviour
         
         if (playersFullReadyCount == ReadyManager.Instance.maxPlayerReadyCount.Value && !determinedFinalAssignment && playersFullReadyCount > 0)
         {
-            Debug.Log("Determining Final Assignment");
             DetermineFinalAssignmentClientRpc();
             determinedFinalAssignment = true;
         }
@@ -294,6 +293,8 @@ public class RoleSelectManager : NetworkBehaviour
     public IEnumerator SpawnWhenLoaded()
     {
         yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "Regular");
+        
+        yield return new WaitForSeconds(5);
         
         Debug.Log("Spawning");
         
