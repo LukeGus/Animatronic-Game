@@ -7,7 +7,6 @@ using System.Linq;
 using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
-using JahroConsole;
 using UnityEngine.SceneManagement;
 using Michsky.LSS;
 
@@ -296,12 +295,14 @@ public class RoleSelectManager : NetworkBehaviour
     {
         yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "Regular");
         
-        SetTransformToSpawnpoint("Animatronic 1", spawnPoint1);
-        SetTransformToSpawnpoint("Animatronic 2", spawnPoint2);
-        SetTransformToSpawnpoint("Animatronic 3", spawnPoint3);
-        SetTransformToSpawnpoint("Animatronic 4", spawnPoint4);
-        SetTransformToSpawnpoint("Animatronic 5", spawnPoint5);
-        SetTransformToSpawnpoint("Guard", guardSpawnPoint);
+        Debug.Log("Spawning");
+        
+        spawnPoint1 = SpawnpointManager.Instance.spawnPoint1;
+        spawnPoint2 = SpawnpointManager.Instance.spawnPoint2;
+        spawnPoint3 = SpawnpointManager.Instance.spawnPoint3;
+        spawnPoint4 = SpawnpointManager.Instance.spawnPoint4;
+        spawnPoint5 = SpawnpointManager.Instance.spawnPoint5;
+        guardSpawnPoint = SpawnpointManager.Instance.guardSpawnPoint;
         
         if (isGuard)
         {
@@ -328,30 +329,6 @@ public class RoleSelectManager : NetworkBehaviour
                     break;
             }
         }
-    }
-    
-    private void SetTransformToSpawnpoint(string spawnpointName, Transform targetTransform)
-    {
-        Transform spawnpointsParent = GameObject.Find("Spawnpoints").transform;
-
-        if (spawnpointsParent == null)
-        {
-            Debug.LogError("Object 'Spawnpoints' not found in the scene!");
-            return;
-        }
-
-        Transform spawnpointTransform = spawnpointsParent.Find(spawnpointName);
-
-        if (spawnpointTransform == null)
-        {
-            Debug.LogError("Object '" + spawnpointName + "' not found under 'Spawnpoints'!");
-            return;
-        }
-
-        // Set the transform to the found spawnpoint object
-        spawnpointTransform.position = targetTransform.position;
-        spawnpointTransform.rotation = targetTransform.rotation;
-        spawnpointTransform.localScale = targetTransform.localScale;
     }
 
     [ServerRpc(RequireOwnership = false)]

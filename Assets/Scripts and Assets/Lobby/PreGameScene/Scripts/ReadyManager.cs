@@ -57,7 +57,7 @@ public class ReadyManager : NetworkBehaviour
     public IEnumerator SetUpGame()
     {
         yield return new WaitForSeconds(2f);
-
+            
         if (NetworkManager.Singleton.IsServer)
         {
             Debug.Log("Host");

@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.08}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.08}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2375,8 +2375,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 0
+  m_fontSizeBase: 0
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2625,7 +2625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4473,7 +4473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading Game...
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4bac9e226729af640bfe97ed42bc2dd4, type: 2}
   m_sharedMaterial: {fileID: 21131478253023500, guid: 4bac9e226729af640bfe97ed42bc2dd4, type: 2}
@@ -4500,8 +4500,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 0
+  m_fontSizeBase: 0
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4784,8 +4784,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 0
+  m_fontSizeBase: 0
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5044,10 +5044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09da65cad5961f4aa4494c96e00ef4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleSize: 50
-  descriptionSize: 30
+  titleSize: 0
+  descriptionSize: 0
   hintSize: 30
-  statusSize: 24
+  statusSize: 0
   pakSize: 35
   titleFont: {fileID: 11400000, guid: 4bac9e226729af640bfe97ed42bc2dd4, type: 2}
   descriptionFont: {fileID: 11400000, guid: 5955cb03b87dd684a905509148ba4dbd, type: 2}
@@ -5057,10 +5057,10 @@ MonoBehaviour:
   titleColor: {r: 1, g: 1, b: 1, a: 1}
   descriptionColor: {r: 1, g: 1, b: 1, a: 1}
   hintColor: {r: 1, g: 1, b: 1, a: 1}
-  spinnerColor: {r: 1, g: 1, b: 1, a: 1}
+  spinnerColor: {r: 0, g: 0, b: 0, a: 1}
   statusColor: {r: 1, g: 1, b: 1, a: 1}
   pakColor: {r: 1, g: 1, b: 1, a: 1}
-  titleObjText: Loading Game...
+  titleObjText: 
   titleObjDescText: 
   pakText: 
   canvasGroup: {fileID: 5592592545954519599}
@@ -5145,7 +5145,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8985211846813716763}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

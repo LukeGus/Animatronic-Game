@@ -9,7 +9,6 @@ using UnityEngine;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
-using JahroConsole;
 
 public class LobbyManager : NetworkBehaviour {
 
