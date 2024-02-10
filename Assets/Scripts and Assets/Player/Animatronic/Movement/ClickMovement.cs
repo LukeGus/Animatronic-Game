@@ -29,7 +29,7 @@ public class ClickMovement : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
-            {
+            { 
                 float distance = Vector3.Distance(target.position, hit.point);
                 
                 if (EnergyManager.Instance.currentEnergy >= distance)
